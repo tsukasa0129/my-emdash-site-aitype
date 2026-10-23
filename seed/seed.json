@@ -52,6 +52,13 @@
 			"supports": ["drafts", "revisions", "preview", "search", "seo"],
 			"fields": [
 				{
+					"slug": "layout",
+					"label": "Layout",
+					"type": "select",
+					"defaultValue": "default",
+					"validation": { "options": ["default", "lp"] }
+				},
+				{
 					"slug": "title",
 					"label": "Title",
 					"type": "string",
@@ -63,13 +70,6 @@
 					"label": "Content",
 					"type": "portableText",
 					"searchable": true
-				},
-				{
-					"slug": "layout",
-					"label": "Layout",
-					"type": "select",
-					"defaultValue": "default",
-					"validation": { "options": ["default", "lp"] }
 				}
 			]
 		}
