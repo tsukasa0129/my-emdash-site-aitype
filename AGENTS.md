@@ -44,29 +44,23 @@ This template ships with `.mcp.json`, `.cursor/mcp.json`, and `.vscode/mcp.json`
 
 ## This Template
 
-A blog with posts, pages, categories, tags, full-text search, and RSS. Designed for personal writing, technical writing, indie newsletters, and anything where the writing is the product. Neutral editorial aesthetic: a framed layout with hairline rails, white cards on an off-white canvas, Inter with JetBrains Mono labels, and real article structure with bylines and reading time.
+Started from the EmDash blog template and cut down to a pages-only site for article landing pages (記事LP) that send readers to the diagnosis app at `app.romance-type.site`. The blog (posts, categories, tags, search, RSS, menus, widgets) has been removed.
 
 ## Pages
 
-| Page        | Path               | What it shows                                                                                                                  |
-| ----------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| Home        | `/`                | Site title and tagline, featured post card (first post with an image), latest posts grid                                       |
-| All posts   | `/posts`           | Post rows with thumbnails, excerpts, bylines, and tag chips; cursor pagination                                                 |
-| Post detail | `/posts/[slug]`    | Tags, title, excerpt, featured image, then a three-column reading view: meta rail, body, table of contents and sidebar widgets |
-| Search      | `/search`          | Full-text search over posts; matching title terms are highlighted                                                              |
-| Page        | `/pages/[slug]`    | Static page content (Portable Text)                                                                                            |
-| Category    | `/category/[slug]` | Card grid of posts in a category                                                                                               |
-| Tag         | `/tag/[slug]`      | Card grid of posts with a tag                                                                                                  |
-| RSS         | `/rss.xml`         | Generated feed                                                                                                                 |
+| Page | Path            | What it shows                                                                                                         |
+| ---- | --------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Page | `/pages/[slug]` | A page's Portable Text content. With `layout: lp`: no site header/footer, no visible title, phone-width (480px) column |
+| 404  | everything else | Minimal "page not found", including `/`                                                                               |
 
 ## Schema
 
-- `posts` collection: `title`, `featured_image`, `content` (Portable Text), `excerpt` (text).
-- `pages` collection: `title`, `content` (Portable Text). Used for `/about` etc.
-- Taxonomies: `category`, `tag`.
-- Single `primary` menu (Home, About, Posts by default).
+- `pages` collection: `layout` (select: `default` / `lp`), `title`, `content` (Portable Text).
+- No other collections, taxonomies, menus, or widget areas.
 
-Site settings have `title` and `tagline`. The title renders in the header, the home page intro, and the footer; the tagline renders under the title in the home page intro and in the footer.
+## Admin
+
+`src/middleware.ts` hides the built-in admin areas this site doesn't use (Calendar, Media, Comments, Menus, Widgets, ...) by injecting CSS into admin pages, leaving Dashboard, Pages, Content Types, Users and Settings. It only hides links. Replace it with `admin.hiddenNavItems` in `astro.config.mjs` once an EmDash release supports that option (1.3.1 does not).
 
 ## Visual character
 

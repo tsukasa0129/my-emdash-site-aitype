@@ -1,13 +1,11 @@
 ---
-import { getMenuWithCacheHint, getSiteSettingsWithCacheHint } from "emdash";
+import { getSiteSettingsWithCacheHint } from "emdash";
 import {
-	WidgetArea,
 	EmDashHead,
 	EmDashBodyStart,
 	EmDashBodyEnd,
 } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
-import LiveSearch from "emdash/ui/search";
 import { Font } from "astro:assets";
 import { getSiteLocale } from "../utils/locale";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
@@ -45,14 +43,8 @@ const {
 	content,
 	bare = false,
 } = Astro.props;
-const [settingsResult, menuResult] = await Promise.all([
-	getSiteSettingsWithCacheHint(),
-	getMenuWithCacheHint("primary"),
-]);
-if (Astro.cache?.enabled) {
-	Astro.cache.set(settingsResult.cacheHint);
-	Astro.cache.set(menuResult.cacheHint);
-}
+const settingsResult = await getSiteSettingsWithCacheHint();
+if (Astro.cache?.enabled) Astro.cache.set(settingsResult.cacheHint);
 
 const { siteTitle, siteTagline, siteLogo } = resolveBlogSiteIdentity(
 	settingsResult.data,
@@ -62,9 +54,6 @@ const titleIncludesSiteName =
 	title.endsWith(` | ${siteTitle}`) ||
 	title.endsWith(` — ${siteTitle}`);
 const fullTitle = titleIncludesSiteName ? title : `${title} — ${siteTitle}`;
-
-const menu = menuResult.data;
-const menuItems = menu?.items ?? [];
 
 // Build public page context for plugin contributions
 // SEO data is passed here and rendered securely by EmDashHead
@@ -86,25 +75,6 @@ const pageCtx = createPublicPageContext({
 // Check if user is logged in (for showing admin link)
 const isLoggedIn = !!Astro.locals.user;
 
-const TRAILING_SLASH = /\/$/;
-const currentPath = Astro.url.pathname.replace(TRAILING_SLASH, "") || "/";
-
-/** "page" for the current page, "true" for its parent section (e.g. Posts on a post). */
-function navCurrent(url: string): "page" | "true" | undefined {
-	let target: URL;
-	try {
-		target = new URL(url, Astro.url);
-	} catch {
-		return undefined;
-	}
-	if (target.origin !== Astro.url.origin || target.hash) return undefined;
-	if (target.search && target.search !== Astro.url.search) return undefined;
-	const path = target.pathname.replace(TRAILING_SLASH, "") || "/";
-	if (path === currentPath) return "page";
-	if (path !== "/" && currentPath.startsWith(`${path}/`)) return "true";
-	return undefined;
-}
-
 const lang = getSiteLocale() ?? "en";
 const monogram = [...siteTitle.trim()][0]?.toUpperCase() ?? "";
 const year = new Date().getFullYear();
@@ -119,12 +89,6 @@ const year = new Date().getFullYear();
 		<Font cssVariable="--font-mono" />
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
-		<link
-			rel="alternate"
-			type="application/rss+xml"
-			title={`${siteTitle} RSS Feed`}
-			href="/rss.xml"
-		/>
 		<script is:inline>
 			// Apply an explicit theme choice immediately to prevent flash.
 			// With no cookie, color-scheme: light dark follows the OS.
@@ -147,7 +111,7 @@ const year = new Date().getFullYear();
 				<>
 		<header class="site-header">
 			<div class="frame site-header__inner">
-				<a href="/" class="brand">
+				<div class="brand">
 					{
 						siteLogo ? (
 							<img
@@ -166,74 +130,8 @@ const year = new Date().getFullYear();
 							</>
 						)
 					}
-				</a>
-				{
-					menuItems.length > 0 && (
-						<nav class="site-nav" aria-label="Main">
-							<ul>
-								{menuItems.map((item) => (
-									<li>
-										<a
-											href={item.url}
-											target={item.target}
-											rel={
-												item.target === "_blank"
-													? "noopener noreferrer"
-													: undefined
-											}
-											aria-current={navCurrent(item.url)}
-										>
-											{item.label}
-										</a>
-									</li>
-								))}
-							</ul>
-						</nav>
-					)
-				}
+				</div>
 				<div class="site-header__actions">
-					<div class="site-search" role="search" aria-label="Site">
-						<svg
-							class="site-search__icon"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="1.75"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
-							><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"
-							></path></svg
-						>
-						<LiveSearch
-							placeholder="Search"
-							class="site-search__field"
-							inputClass="site-search-input"
-							resultsClass="site-search-results"
-							resultClass="site-search-result"
-							collections={["posts", "pages"]}
-						/>
-						<kbd class="site-search__kbd" aria-hidden="true"
-							><span dir="ltr">⌘K</span></kbd
-						>
-					</div>
-					<a
-						href="/search"
-						class="icon-btn site-search-link"
-						aria-label="Search"
-					>
-						<svg
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="1.75"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
-							><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"
-							></path></svg
-						>
-					</a>
 					{
 						isLoggedIn && (
 							<a href="/_emdash/admin" class="btn btn--ghost btn--sm nav-admin">
@@ -271,7 +169,7 @@ const year = new Date().getFullYear();
 		<footer class="site-footer band">
 			<div class="frame site-footer__grid">
 				<div class="site-footer__brand">
-					<a href="/" class="brand">
+					<div class="brand">
 						{
 							siteLogo ? (
 								<img
@@ -290,61 +188,8 @@ const year = new Date().getFullYear();
 								</>
 							)
 						}
-					</a>
+					</div>
 					{siteTagline && <p class="site-footer__tagline">{siteTagline}</p>}
-				</div>
-				{
-					menuItems.length > 0 && (
-						<nav class="site-footer__col" aria-labelledby="footer-navigate">
-							<h2 id="footer-navigate" class="eyebrow">
-								Navigate
-							</h2>
-							<ul class="site-footer__links">
-								{menuItems.map((item) => (
-									<li>
-										<a
-											href={item.url}
-											target={item.target}
-											rel={
-												item.target === "_blank"
-													? "noopener noreferrer"
-													: undefined
-											}
-										>
-											{item.label}
-										</a>
-									</li>
-								))}
-							</ul>
-						</nav>
-					)
-				}
-				<div class="site-footer__col">
-					<h2 class="eyebrow">Connect</h2>
-					<ul class="site-footer__links">
-						<li>
-							<a href="/rss.xml">
-								<svg
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="1.75"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									aria-hidden="true"
-									><path d="M4 11a9 9 0 0 1 9 9"></path><path
-										d="M4 4a16 16 0 0 1 16 16"></path><circle
-										cx="5"
-										cy="19"
-										r="1"></circle></svg
-								>
-								RSS feed
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div class="site-footer__col site-footer__widgets">
-					<WidgetArea name="footer" />
 				</div>
 			</div>
 			<div class="band site-footer__bottom">
@@ -1490,22 +1335,6 @@ const year = new Date().getFullYear();
 			}
 		</style>
 
-		<script>
-			// ⌘K / Ctrl+K focuses the header search
-			const searchInput =
-				document.querySelector<HTMLInputElement>(".site-search-input");
-			const kbd = document.querySelector(".site-search__kbd span");
-			if (kbd && !/Mac|iPhone|iPad|iPod/.test(navigator.platform)) {
-				kbd.textContent = "Ctrl K";
-			}
-			document.addEventListener("keydown", (e) => {
-				if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== "k") return;
-				// The header search is hidden on small screens; leave the shortcut to the browser there
-				if (!searchInput || searchInput.getClientRects().length === 0) return;
-				e.preventDefault();
-				searchInput.focus();
-			});
-		</script>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
 </html>
