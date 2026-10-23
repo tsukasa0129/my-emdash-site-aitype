@@ -38,6 +38,7 @@ const seo = getSeoMeta(page, {
 	canonical={seo.canonical}
 	robots={seo.robots}
 	content={{ collection: "pages", id: page.data.id, slug }}
+	bare={page.data.layout === "lp"}
 >
 	<article class="band page">
 		<div class="frame page__layout">
