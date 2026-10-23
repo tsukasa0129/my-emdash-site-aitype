@@ -9,8 +9,6 @@ export interface Page {
   id: string;
   slug: string | null;
   status: string;
-  layout?: "default" | "lp";
-  title: string;
   content?: PortableTextBlock[];
   createdAt: Date;
   updatedAt: Date;

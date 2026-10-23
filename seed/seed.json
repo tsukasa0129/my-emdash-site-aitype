@@ -25,25 +25,6 @@
 			],
 			"fields": [
 				{
-					"slug": "layout",
-					"label": "Layout",
-					"type": "select",
-					"defaultValue": "default",
-					"validation": {
-						"options": [
-							"default",
-							"lp"
-						]
-					}
-				},
-				{
-					"slug": "title",
-					"label": "Title",
-					"type": "string",
-					"required": true,
-					"searchable": true
-				},
-				{
 					"slug": "content",
 					"label": "Content",
 					"type": "portableText",

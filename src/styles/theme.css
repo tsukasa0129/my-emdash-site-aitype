@@ -31,4 +31,6 @@
 */
 
 :root {
+	/* Landing pages read like a phone screen at every viewport width */
+	--wide-width: 480px;
 }
