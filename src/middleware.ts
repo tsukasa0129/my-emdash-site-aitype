@@ -66,9 +66,92 @@ function check(){if(roots.indexOf(location.pathname)!==-1)location.replace(home)
 addEventListener("popstate",check);
 })();`;
 
+/**
+ * MCP tools for features this site doesn't use. EmDash's MCP server can only
+ * be switched on or off as a whole, so drop these from `tools/list` and refuse
+ * calls to them. Mirrors the admin: bylines, taxonomies, menus, block types
+ * and site import/export are gone; pages, media, revisions, search, settings
+ * and the content model stay.
+ */
+const MCP_PATH = "/_emdash/api/mcp";
+const HIDDEN_MCP_TOOL = /^(byline_|taxonomy_|menu_|site_|schema_.*block_type)/;
+
+interface JsonRpcMessage {
+	id?: string | number | null;
+	method?: string;
+	params?: { name?: unknown };
+	result?: { tools?: { name: string }[] };
+}
+
+function isHiddenTool(name: unknown): boolean {
+	return typeof name === "string" && HIDDEN_MCP_TOOL.test(name);
+}
+
+/** Removes hidden tools from a JSON-RPC payload; returns it unchanged otherwise. */
+function filterToolList(json: string): string {
+	let payload: JsonRpcMessage | JsonRpcMessage[];
+	try {
+		payload = JSON.parse(json);
+	} catch {
+		return json;
+	}
+	for (const message of Array.isArray(payload) ? payload : [payload]) {
+		if (Array.isArray(message?.result?.tools)) {
+			message.result.tools = message.result.tools.filter(
+				(tool) => !isHiddenTool(tool.name),
+			);
+		}
+	}
+	return JSON.stringify(payload);
+}
+
+async function handleMcp(
+	request: Request,
+	next: () => Promise<Response>,
+): Promise<Response> {
+	let body: unknown;
+	try {
+		body = await request.clone().json();
+	} catch {
+		return next();
+	}
+	const messages = (Array.isArray(body) ? body : [body]) as JsonRpcMessage[];
+
+	const blocked = messages.find(
+		(m) => m?.method === "tools/call" && isHiddenTool(m.params?.name),
+	);
+	if (blocked) {
+		return Response.json({
+			jsonrpc: "2.0",
+			id: blocked.id ?? null,
+			error: { code: -32602, message: `Unknown tool: ${blocked.params?.name}` },
+		});
+	}
+
+	const response = await next();
+	if (!messages.some((m) => m?.method === "tools/list")) return response;
+
+	// Streamable HTTP answers with plain JSON or a server-sent event stream.
+	const text = await response.text();
+	const filtered = response.headers.get("content-type")?.includes("text/event-stream")
+		? text.replace(/^data: (.*)$/gm, (_, json: string) => `data: ${filterToolList(json)}`)
+		: filterToolList(text);
+	const headers = new Headers(response.headers);
+	headers.delete("content-length");
+	return new Response(filtered, {
+		status: response.status,
+		statusText: response.statusText,
+		headers,
+	});
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
 	if (ADMIN_ROOTS.has(context.url.pathname)) {
 		return context.redirect(ADMIN_HOME, 302);
+	}
+
+	if (context.url.pathname === MCP_PATH && context.request.method === "POST") {
+		return handleMcp(context.request, next);
 	}
 
 	const response = await next();
