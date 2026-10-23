@@ -29,6 +29,10 @@ const seo = getSeoMeta(page, {
 	siteUrl: Astro.url.origin,
 	path: Astro.url.pathname.replace(/\/$/, ""),
 });
+
+// Landing pages drop the site chrome and the visible title; the article
+// body carries its own headline.
+const isLanding = page.data.layout === "lp";
 ---
 
 <Base
@@ -38,11 +42,11 @@ const seo = getSeoMeta(page, {
 	canonical={seo.canonical}
 	robots={seo.robots}
 	content={{ collection: "pages", id: page.data.id, slug }}
-	bare={page.data.layout === "lp"}
+	bare={isLanding}
 >
 	<article class="band page">
-		<div class="frame page__layout">
-			<header class="page__header">
+		<div class:list={["frame page__layout", { "page__layout--landing": isLanding }]}>
+			<header class:list={["page__header", { "sr-only": isLanding }]}>
 				<h1 class="page__title" {...page.edit.title}>{page.data.title}</h1>
 			</header>
 
@@ -76,7 +80,12 @@ const seo = getSeoMeta(page, {
 			column-gap: clamp(2rem, 1rem + 4vw, 6rem);
 		}
 
-		.page__header {
+		.page__layout--landing {
+			grid-template-columns: minmax(0, var(--content-width));
+			justify-content: center;
+		}
+
+		.page__header:not(.sr-only) {
 			position: sticky;
 			top: calc(var(--nav-height) + var(--spacing-8));
 			align-self: start;
