@@ -62,5 +62,5 @@ export function getReadingTime(content: PortableTextBlock[] | undefined): number
  * Format reading time for display
  */
 export function formatReadingTime(minutes: number): string {
-	return `約${minutes}分で読めます`;
+	return `${minutes} min read`;
 }

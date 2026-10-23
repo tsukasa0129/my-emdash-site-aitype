@@ -1,214 +1,68 @@
 {
 	"$schema": "https://emdashcms.com/seed.schema.json",
 	"version": "1",
-	"defaultLocale": "ja",
 	"meta": {
-		"name": "恋愛タイプ診断",
-		"description": "質問に答えると恋愛タイプがわかる診断サイト。質問・タイプ・コラムはすべて管理画面で編集できます。",
-		"author": "aitype"
+		"name": "Blog Starter",
+		"description": "A blog with posts and pages",
+		"author": "EmDash"
 	},
 	"settings": {
-		"title": "aitype",
-		"tagline": "あなたの恋は、どのタイプ？"
+		"title": "My Blog",
+		"tagline": "Thoughts on building for the web"
 	},
 	"collections": [
 		{
 			"slug": "posts",
-			"label": "恋愛コラム",
-			"labelSingular": "コラム",
+			"label": "Posts",
+			"labelSingular": "Post",
 			"urlPattern": "/posts/{slug}",
-			"supports": [
-				"drafts",
-				"revisions",
-				"preview",
-				"scheduling",
-				"search",
-				"seo"
-			],
+			"supports": ["drafts", "revisions", "preview", "scheduling", "search", "seo"],
 			"commentsEnabled": true,
 			"fields": [
 				{
 					"slug": "title",
-					"label": "タイトル",
+					"label": "Title",
 					"type": "string",
 					"required": true,
 					"searchable": true
 				},
 				{
 					"slug": "featured_image",
-					"label": "アイキャッチ画像",
+					"label": "Featured Image",
 					"type": "image"
 				},
 				{
 					"slug": "content",
-					"label": "本文",
+					"label": "Content",
 					"type": "portableText",
 					"searchable": true
 				},
 				{
 					"slug": "excerpt",
-					"label": "抜粋",
+					"label": "Excerpt",
 					"type": "text"
 				}
 			]
 		},
 		{
 			"slug": "pages",
-			"label": "固定ページ",
-			"labelSingular": "固定ページ",
+			"label": "Pages",
+			"labelSingular": "Page",
 			"urlPattern": "/pages/{slug}",
-			"supports": [
-				"drafts",
-				"revisions",
-				"preview",
-				"search",
-				"seo"
-			],
+			"supports": ["drafts", "revisions", "preview", "search", "seo"],
 			"fields": [
 				{
 					"slug": "title",
-					"label": "タイトル",
+					"label": "Title",
 					"type": "string",
 					"required": true,
 					"searchable": true
 				},
 				{
 					"slug": "content",
-					"label": "本文",
+					"label": "Content",
 					"type": "portableText",
 					"searchable": true
-				}
-			]
-		},
-		{
-			"slug": "love_types",
-			"label": "恋愛タイプ",
-			"labelSingular": "恋愛タイプ",
-			"urlPattern": "/types/{slug}",
-			"supports": [
-				"drafts",
-				"revisions",
-				"preview",
-				"search",
-				"seo"
-			],
-			"fields": [
-				{
-					"slug": "title",
-					"label": "タイプ名",
-					"type": "string",
-					"required": true,
-					"searchable": true
-				},
-				{
-					"slug": "catchphrase",
-					"label": "キャッチコピー",
-					"type": "string",
-					"searchable": true
-				},
-				{
-					"slug": "summary",
-					"label": "ひとことで言うと",
-					"type": "text",
-					"searchable": true
-				},
-				{
-					"slug": "featured_image",
-					"label": "イメージ画像",
-					"type": "image"
-				},
-				{
-					"slug": "content",
-					"label": "詳しい解説",
-					"type": "portableText",
-					"searchable": true
-				},
-				{
-					"slug": "strengths",
-					"label": "恋の強み",
-					"type": "text"
-				},
-				{
-					"slug": "cautions",
-					"label": "気をつけたいこと",
-					"type": "text"
-				},
-				{
-					"slug": "advice",
-					"label": "うまくいくコツ",
-					"type": "text"
-				},
-				{
-					"slug": "best_match",
-					"label": "相性のいいタイプ（スラッグ）",
-					"type": "select",
-					"validation": {
-						"options": [
-							"sunshine",
-							"spark",
-							"harbor",
-							"moonlight"
-						]
-					}
-				},
-				{
-					"slug": "sort_order",
-					"label": "表示順（同点のときも優先）",
-					"type": "integer",
-					"indexed": true
-				}
-			]
-		},
-		{
-			"slug": "questions",
-			"label": "診断の質問",
-			"labelSingular": "質問",
-			"supports": [
-				"drafts",
-				"revisions"
-			],
-			"fields": [
-				{
-					"slug": "title",
-					"label": "質問文",
-					"type": "string",
-					"required": true
-				},
-				{
-					"slug": "options",
-					"label": "選択肢",
-					"type": "repeater",
-					"required": true,
-					"validation": {
-						"minItems": 2,
-						"maxItems": 6,
-						"subFields": [
-							{
-								"slug": "label",
-								"label": "選択肢の文",
-								"type": "string",
-								"required": true
-							},
-							{
-								"slug": "type",
-								"label": "加点するタイプ",
-								"type": "select",
-								"required": true,
-								"options": [
-									"sunshine",
-									"spark",
-									"harbor",
-									"moonlight"
-								]
-							}
-						]
-					}
-				},
-				{
-					"slug": "sort_order",
-					"label": "表示順",
-					"type": "integer",
-					"indexed": true
 				}
 			]
 		}
@@ -216,51 +70,47 @@
 	"taxonomies": [
 		{
 			"name": "category",
-			"label": "カテゴリ",
-			"labelSingular": "カテゴリ",
+			"label": "Categories",
+			"labelSingular": "Category",
 			"hierarchical": true,
-			"collections": [
-				"posts"
-			],
+			"collections": ["posts"],
 			"terms": [
 				{
-					"slug": "basics",
-					"label": "診断の読み方"
+					"slug": "development",
+					"label": "Development"
 				},
 				{
-					"slug": "compatibility",
-					"label": "相性"
+					"slug": "design",
+					"label": "Design"
 				},
 				{
-					"slug": "communication",
-					"label": "コミュニケーション"
+					"slug": "notes",
+					"label": "Notes"
 				}
 			]
 		},
 		{
 			"name": "tag",
-			"label": "タグ",
-			"labelSingular": "タグ",
+			"label": "Tags",
+			"labelSingular": "Tag",
 			"hierarchical": false,
-			"collections": [
-				"posts"
-			],
+			"collections": ["posts"],
 			"terms": [
 				{
-					"slug": "love-types",
-					"label": "恋愛タイプ"
+					"slug": "webdev",
+					"label": "Web Development"
 				},
 				{
-					"slug": "messaging",
-					"label": "連絡頻度"
+					"slug": "opinion",
+					"label": "Opinion"
 				},
 				{
-					"slug": "couples",
-					"label": "カップル"
+					"slug": "tools",
+					"label": "Tools"
 				},
 				{
-					"slug": "crush",
-					"label": "片思い"
+					"slug": "creativity",
+					"label": "Creativity"
 				}
 			]
 		}
@@ -268,39 +118,35 @@
 	"bylines": [
 		{
 			"id": "byline-editorial",
-			"slug": "aitype-editorial",
-			"displayName": "aitype編集部"
+			"slug": "emdash-editorial",
+			"displayName": "EmDash Editorial"
+		},
+		{
+			"id": "byline-guest",
+			"slug": "guest-contributor",
+			"displayName": "Guest Contributor",
+			"isGuest": true
 		}
 	],
 	"menus": [
 		{
 			"name": "primary",
-			"label": "メインメニュー",
+			"label": "Primary Navigation",
 			"items": [
 				{
 					"type": "custom",
-					"label": "ホーム",
+					"label": "Home",
 					"url": "/"
 				},
 				{
 					"type": "custom",
-					"label": "診断する",
-					"url": "/shindan"
-				},
-				{
-					"type": "custom",
-					"label": "タイプ一覧",
-					"url": "/types"
-				},
-				{
-					"type": "custom",
-					"label": "コラム",
-					"url": "/posts"
-				},
-				{
-					"type": "custom",
-					"label": "このサイトについて",
+					"label": "About",
 					"url": "/pages/about"
+				},
+				{
+					"type": "custom",
+					"label": "Posts",
+					"url": "/posts"
 				}
 			]
 		}
@@ -308,38 +154,52 @@
 	"widgetAreas": [
 		{
 			"name": "sidebar",
-			"label": "サイドバー",
-			"description": "コラム記事ページに表示されるウィジェット",
+			"label": "Sidebar",
+			"description": "Widget area displayed on single post pages",
 			"widgets": [
 				{
 					"type": "component",
+					"componentId": "core:search",
+					"title": "Search"
+				},
+				{
+					"type": "component",
 					"componentId": "core:categories",
-					"title": "カテゴリ"
+					"title": "Categories"
 				},
 				{
 					"type": "component",
 					"componentId": "core:tags",
-					"title": "タグ"
+					"title": "Tags"
 				},
 				{
 					"type": "component",
 					"componentId": "core:recent-posts",
-					"title": "新着コラム",
+					"title": "Recent Posts",
 					"props": {
 						"count": 5,
 						"showDate": true
+					}
+				},
+				{
+					"type": "component",
+					"componentId": "core:archives",
+					"title": "Archives",
+					"props": {
+						"type": "monthly",
+						"limit": 6
 					}
 				}
 			]
 		},
 		{
 			"name": "footer",
-			"label": "フッター",
-			"description": "サイト下部に表示されるウィジェット",
+			"label": "Footer",
+			"description": "Widget area displayed in the site footer",
 			"widgets": [
 				{
 					"type": "content",
-					"title": "このサイトについて",
+					"title": "About",
 					"content": [
 						{
 							"_type": "block",
@@ -347,32 +207,81 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "恋の傾向を4つのタイプで読み解く診断サイトです。結果は楽しみながら自分を知るヒントとしてお使いください。",
-									"_key": "k57"
+									"text": "A blog about software, design, and the occasional stray thought.",
+									"_key": "k1"
 								}
 							],
-							"_key": "k58"
+							"_key": "k0"
 						}
 					]
 				}
 			]
 		}
 	],
+	"sections": [
+		{
+			"slug": "newsletter-signup",
+			"title": "Newsletter Signup",
+			"description": "A call-to-action block for newsletter subscriptions",
+			"keywords": ["newsletter", "subscribe", "email", "cta"],
+			"source": "theme",
+			"content": [
+				{
+					"_type": "block",
+					"style": "h3",
+					"children": [
+						{
+							"_type": "span",
+							"text": "Stay in the loop",
+							"_key": "k1"
+						}
+					],
+					"_key": "k0"
+				},
+				{
+					"_type": "block",
+					"style": "normal",
+					"children": [
+						{
+							"_type": "span",
+							"text": "Get notified when new posts are published. No spam, unsubscribe anytime.",
+							"_key": "k3"
+						}
+					],
+					"_key": "k2"
+				}
+			]
+		},
+		{
+			"slug": "about-author",
+			"title": "About the Author",
+			"description": "Brief author bio for use in posts or pages",
+			"keywords": ["author", "bio", "about"],
+			"source": "theme",
+			"content": [
+				{
+					"_type": "block",
+					"style": "normal",
+					"children": [
+						{
+							"_type": "span",
+							"text": "A software developer who writes about building things on the web. Based somewhere with good coffee and reliable internet.",
+							"_key": "k1"
+						}
+					],
+					"_key": "k0"
+				}
+			]
+		}
+	],
 	"content": {
-		"love_types": [
+		"pages": [
 			{
-				"id": "type-sunshine",
-				"slug": "sunshine",
+				"id": "about",
+				"slug": "about",
 				"status": "published",
 				"data": {
-					"title": "ひだまり型",
-					"catchphrase": "「好き」をまっすぐ届けて、いつもそばで温め合いたい人",
-					"summary": "気持ちを言葉にするのが得意で、恋人と過ごす時間そのものを大切にするタイプ。一緒にいる安心感が、あなたの恋のエネルギー源です。",
-					"strengths": "愛情表現が素直で、相手に「大切にされている」と実感させるのが上手。ケンカをしても長引かせず、自分から歩み寄れます。",
-					"cautions": "相手の反応が薄いと「気持ちが冷めたのかな」と不安になりがち。会えない時間が続くと、寂しさを溜め込んでしまうことも。",
-					"advice": "寂しさは責める言葉ではなく「会えたらうれしい」という願いとして伝えると、相手も応えやすくなります。ひとりで楽しめる趣味を持つと、恋がもっと安定します。",
-					"best_match": "harbor",
-					"sort_order": 1,
+					"title": "About",
 					"content": [
 						{
 							"_type": "block",
@@ -380,8 +289,64 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "ひだまり型のあなたは、恋をすると心がぱっと明るくなる人です。おはようやおやすみのメッセージ、会ったときのハグ、何気ない「好きだよ」。そうした小さな表現を積み重ねることが、あなたにとっての愛し方です。",
+									"text": "A place for writing about software, design, and the occasional stray thought. No posting schedule, no newsletter funnel. Just things I wanted to write down.",
 									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Built with Astro and EmDash. The source is open if you want to see how it works.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						}
+					]
+				}
+			}
+		],
+		"posts": [
+			{
+				"id": "post-1",
+				"slug": "building-for-the-long-term",
+				"status": "published",
+				"data": {
+					"title": "Building for the Long Term",
+					"excerpt": "The frameworks will change. The databases will change. What survives is the clarity of your thinking.",
+					"featured_image": {
+						"$media": {
+							"url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&h=800&fit=crop",
+							"alt": "Code on a monitor in a dark room",
+							"filename": "building-long-term.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Every few years the industry collectively decides that everything we've been doing is wrong and there's a better way. New frameworks, new paradigms, new build tools. The churn is relentless, and if you're not careful, you spend more time migrating than building.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "I've been writing software long enough to have seen several of these cycles. jQuery to Backbone to Angular to React to whatever comes next. Each transition felt urgent at the time. Looking back, the things that actually mattered were rarely about the framework.",
+									"_key": "k3"
 								}
 							],
 							"_key": "k2"
@@ -392,8 +357,8 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "恋をするとこうなる",
-									"_key": "k3"
+									"text": "What survives",
+									"_key": "k5"
 								}
 							],
 							"_key": "k4"
@@ -404,27 +369,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "好きな人とはできるだけ毎日やりとりしたい",
-									"_key": "k5"
-								}
-							],
-							"_key": "k6",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "記念日やちょっとしたサプライズを考えるのが楽しい",
+									"text": "Clean data models survive. Clear boundaries between systems survive. Good naming survives. The decision to keep things simple when you could have made them clever - that definitely survives.",
 									"_key": "k7"
 								}
 							],
-							"_key": "k8",
-							"listItem": "bullet",
-							"level": 1
+							"_key": "k6"
 						},
 						{
 							"_type": "block",
@@ -432,596 +381,54 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "相手の友だちや家族とも仲良くなりたい",
+									"text": "What doesn't survive is code that was written to impress, abstractions built for problems that never materialized, and architectures designed around a framework's opinions rather than the domain's reality.",
 									"_key": "k9"
 								}
 							],
-							"_key": "k10",
-							"listItem": "bullet",
-							"level": 1
+							"_key": "k8"
 						},
 						{
 							"_type": "block",
-							"style": "h2",
+							"style": "normal",
 							"children": [
 								{
 									"_type": "span",
-									"text": "恋人から見たあなた",
+									"text": "The best code I've written is boring. It reads like prose, does one thing well, and doesn't require a PhD in category theory to understand. The worst code I've written was technically impressive at the time.",
 									"_key": "k11"
 								}
 							],
-							"_key": "k12"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "一緒にいると元気をもらえる、太陽のような存在です。一方で、マイペースな相手からは「少し距離が近い」と感じられることもあります。相手のペースを尊重する余白をつくると、ふたりの関係はさらに居心地のいいものになります。",
-									"_key": "k13"
-								}
-							],
-							"_key": "k14"
+							"_key": "k10"
 						}
 					]
+				},
+				"bylines": [
+					{
+						"byline": "byline-editorial"
+					},
+					{
+						"byline": "byline-guest",
+						"roleLabel": "Guest essay"
+					}
+				],
+				"taxonomies": {
+					"category": ["development"],
+					"tag": ["opinion"]
 				}
 			},
 			{
-				"id": "type-spark",
-				"slug": "spark",
+				"id": "post-2",
+				"slug": "the-case-for-static",
 				"status": "published",
 				"data": {
-					"title": "ときめき型",
-					"catchphrase": "ドキドキも自分らしさも、どちらも手放さない人",
-					"summary": "恋には新鮮さと刺激を求めつつ、自分の世界や時間もしっかり守りたいタイプ。気持ちはストレートに伝えるけれど、べったりした関係は苦手です。",
-					"strengths": "一緒にいて退屈させない行動力と、好きな気持ちを伝える思い切りのよさ。自立しているので、相手にも自由を与えられます。",
-					"cautions": "関係が落ち着いてくると「ときめきが減った」と感じやすく、気持ちが揺らぎがち。予定を優先しすぎて、恋人に寂しい思いをさせることも。",
-					"advice": "新しいお店や旅行など、ふたりで「初めて」を共有する機会をつくると、長く付き合ってもときめきが続きます。安定は退屈ではなく、冒険のための拠点だと考えてみて。",
-					"best_match": "moonlight",
-					"sort_order": 2,
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "ときめき型のあなたは、恋に「わくわく」を求める人です。気になる相手には自分からアプローチできる一方、恋愛だけに生活を染められるのは好みません。仕事や趣味、友人との時間があってこその恋だと考えています。",
-									"_key": "k15"
-								}
-							],
-							"_key": "k16"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "恋をするとこうなる",
-									"_key": "k17"
-								}
-							],
-							"_key": "k18"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "好きになったら駆け引きより先に行動する",
-									"_key": "k19"
-								}
-							],
-							"_key": "k20",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "デートは定番より、まだ行ったことのない場所がいい",
-									"_key": "k21"
-								}
-							],
-							"_key": "k22",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "毎日の連絡より、会ったときの密度を大事にしたい",
-									"_key": "k23"
-								}
-							],
-							"_key": "k24",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "恋人から見たあなた",
-									"_key": "k25"
-								}
-							],
-							"_key": "k26"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "一緒にいると世界が広がる、刺激的なパートナーです。ただ、相手が安定志向だと「いつか離れていきそう」と不安にさせてしまうかもしれません。ときどき言葉で「あなたが大切」と伝えるだけで、相手の安心感は大きく変わります。",
-									"_key": "k27"
-								}
-							],
-							"_key": "k28"
-						}
-					]
-				}
-			},
-			{
-				"id": "type-harbor",
-				"slug": "harbor",
-				"status": "published",
-				"data": {
-					"title": "港型",
-					"catchphrase": "言葉より行動で、帰ってこられる場所をつくる人",
-					"summary": "愛情を口にするのは照れくさくても、相手のために動くことで気持ちを示すタイプ。穏やかで安定した関係を長く育てていくのが得意です。",
-					"strengths": "相手の小さな変化に気づき、さりげなく支えられる観察力と包容力。約束を守り、信頼をこつこつ積み上げられます。",
-					"cautions": "尽くしすぎて自分の気持ちを後回しにしがち。「言わなくても伝わっているはず」と思い込み、すれ違いに気づくのが遅れることも。",
-					"advice": "たまには「ありがとう」「うれしい」を言葉で伝えてみて。あなたが自分の希望も口にすることで、相手もあなたを支えやすくなります。",
-					"best_match": "sunshine",
-					"sort_order": 3,
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "港型のあなたは、恋人にとっての「帰る場所」になれる人です。疲れていそうなら好きなものを用意する、困っていたら黙って手を貸す。派手さはなくても、行動ひとつひとつに愛情がこもっています。",
-									"_key": "k29"
-								}
-							],
-							"_key": "k30"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "恋をするとこうなる",
-									"_key": "k31"
-								}
-							],
-							"_key": "k32"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "相手の好みや予定を自然と覚えている",
-									"_key": "k33"
-								}
-							],
-							"_key": "k34",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "ケンカより話し合い、話し合いより先に気づかいを選ぶ",
-									"_key": "k35"
-								}
-							],
-							"_key": "k36",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "長く一緒にいるほど、関係の良さを実感する",
-									"_key": "k37"
-								}
-							],
-							"_key": "k38",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "恋人から見たあなた",
-									"_key": "k39"
-								}
-							],
-							"_key": "k40"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "そばにいるだけで安心できる、頼れるパートナーです。ただ、気持ちをあまり言葉にしないぶん、相手が「本当に好きでいてくれているのかな」と迷うこともあります。行動にひとこと添えるだけで、あなたの優しさはもっと伝わります。",
-									"_key": "k41"
-								}
-							],
-							"_key": "k42"
-						}
-					]
-				}
-			},
-			{
-				"id": "type-moonlight",
-				"slug": "moonlight",
-				"status": "published",
-				"data": {
-					"title": "月光型",
-					"catchphrase": "静かに、深く、ひとりの人を想い続ける人",
-					"summary": "恋に落ちるまでは慎重ですが、一度心を開くと深く一途に想うタイプ。自分のペースや内面の世界を大切にし、言葉よりも空気感で通じ合える関係を望みます。",
-					"strengths": "相手をよく見て、本質を理解しようとする誠実さ。軽い気持ちで恋をしないので、信頼できる関係を築けます。",
-					"cautions": "気持ちを表に出さないため、好意が相手に伝わらないまま時間が過ぎがち。傷つくのを恐れて、一歩を踏み出せないことも。",
-					"advice": "すべてを言葉にしなくて大丈夫。「また会いたい」のひとことだけでも、相手にとっては大きなサインになります。小さな自己開示から始めてみましょう。",
-					"best_match": "spark",
-					"sort_order": 4,
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "月光型のあなたは、静かな情熱を持った人です。誰とでもすぐに打ち解けるわけではありませんが、心を許した相手には深い愛情を注ぎます。にぎやかなデートより、ふたりで落ち着いて話せる時間に幸せを感じるはずです。",
-									"_key": "k43"
-								}
-							],
-							"_key": "k44"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "恋をするとこうなる",
-									"_key": "k45"
-								}
-							],
-							"_key": "k46"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "好きになるまでに時間がかかるが、なってからは一途",
-									"_key": "k47"
-								}
-							],
-							"_key": "k48",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "相手の言葉の裏にある気持ちまで考えてしまう",
-									"_key": "k49"
-								}
-							],
-							"_key": "k50",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "ひとりの時間がないと、恋愛にも疲れてしまう",
-									"_key": "k51"
-								}
-							],
-							"_key": "k52",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "恋人から見たあなた",
-									"_key": "k53"
-								}
-							],
-							"_key": "k54"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "知れば知るほど魅力がわかる、奥行きのあるパートナーです。一方で、本音が見えにくく「何を考えているのかわからない」と思われることも。ときどき気持ちを言葉にする練習をすると、ふたりの距離はぐっと縮まります。",
-									"_key": "k55"
-								}
-							],
-							"_key": "k56"
-						}
-					]
-				}
-			}
-		],
-		"questions": [
-			{
-				"id": "question-1",
-				"slug": "q1",
-				"status": "published",
-				"data": {
-					"title": "好きな人ができたら、最初にどうする？",
-					"options": [
-						{
-							"label": "まずは仲良くなりたくて、こまめに話しかける",
-							"type": "sunshine"
-						},
-						{
-							"label": "思い切って食事やデートに誘ってみる",
-							"type": "spark"
-						},
-						{
-							"label": "相手が困っていることがないか、さりげなく気にかける",
-							"type": "harbor"
-						},
-						{
-							"label": "しばらくは様子を見て、相手のことをじっくり知る",
-							"type": "moonlight"
-						}
-					],
-					"sort_order": 1
-				}
-			},
-			{
-				"id": "question-2",
-				"slug": "q2",
-				"status": "published",
-				"data": {
-					"title": "恋人との連絡、ちょうどいい頻度は？",
-					"options": [
-						{
-							"label": "毎日、できれば何度でもやりとりしたい",
-							"type": "sunshine"
-						},
-						{
-							"label": "用事があるときや、話したいことができたときに",
-							"type": "spark"
-						},
-						{
-							"label": "相手のペースに合わせて、返事は欠かさない",
-							"type": "harbor"
-						},
-						{
-							"label": "数日に一度でも、気持ちが通じていれば十分",
-							"type": "moonlight"
-						}
-					],
-					"sort_order": 2
-				}
-			},
-			{
-				"id": "question-3",
-				"slug": "q3",
-				"status": "published",
-				"data": {
-					"title": "理想の休日デートは？",
-					"options": [
-						{
-							"label": "家でまったり。ずっとくっついていたい",
-							"type": "sunshine"
-						},
-						{
-							"label": "行ったことのない街や、話題のスポットへ",
-							"type": "spark"
-						},
-						{
-							"label": "相手の行きたい場所に付き合って、楽しそうな顔を見たい",
-							"type": "harbor"
-						},
-						{
-							"label": "静かなカフェや美術館で、ゆっくり話したい",
-							"type": "moonlight"
-						}
-					],
-					"sort_order": 3
-				}
-			},
-			{
-				"id": "question-4",
-				"slug": "q4",
-				"status": "published",
-				"data": {
-					"title": "恋人が落ち込んでいるとき、あなたは？",
-					"options": [
-						{
-							"label": "すぐに会いに行って、気持ちを全部聞く",
-							"type": "sunshine"
-						},
-						{
-							"label": "気分転換になりそうな場所へ連れ出す",
-							"type": "spark"
-						},
-						{
-							"label": "好きな食べ物を用意するなど、黙ってそっと支える",
-							"type": "harbor"
-						},
-						{
-							"label": "必要なときに話せるよう、そばで待っている",
-							"type": "moonlight"
-						}
-					],
-					"sort_order": 4
-				}
-			},
-			{
-				"id": "question-5",
-				"slug": "q5",
-				"status": "published",
-				"data": {
-					"title": "「好き」の伝え方で一番近いのは？",
-					"options": [
-						{
-							"label": "言葉で何度でも伝える",
-							"type": "sunshine"
-						},
-						{
-							"label": "サプライズや行動で、驚かせながら伝える",
-							"type": "spark"
-						},
-						{
-							"label": "毎日の気づかいや手助けで示す",
-							"type": "harbor"
-						},
-						{
-							"label": "特別なときに、心をこめてひとことだけ",
-							"type": "moonlight"
-						}
-					],
-					"sort_order": 5
-				}
-			},
-			{
-				"id": "question-6",
-				"slug": "q6",
-				"status": "published",
-				"data": {
-					"title": "ケンカをしたら？",
-					"options": [
-						{
-							"label": "その日のうちに仲直りしたい",
-							"type": "sunshine"
-						},
-						{
-							"label": "言いたいことはその場ではっきり言う",
-							"type": "spark"
-						},
-						{
-							"label": "まずは相手の言い分を聞いて、落としどころを探す",
-							"type": "harbor"
-						},
-						{
-							"label": "少し時間をおいて、気持ちを整理してから話す",
-							"type": "moonlight"
-						}
-					],
-					"sort_order": 6
-				}
-			},
-			{
-				"id": "question-7",
-				"slug": "q7",
-				"status": "published",
-				"data": {
-					"title": "恋人に一番求めるものは？",
-					"options": [
-						{
-							"label": "いつもそばにいてくれる安心感",
-							"type": "sunshine"
-						},
-						{
-							"label": "一緒にいて飽きないドキドキ",
-							"type": "spark"
-						},
-						{
-							"label": "信頼して長く付き合える誠実さ",
-							"type": "harbor"
-						},
-						{
-							"label": "言葉がなくてもわかり合える深いつながり",
-							"type": "moonlight"
-						}
-					],
-					"sort_order": 7
-				}
-			},
-			{
-				"id": "question-8",
-				"slug": "q8",
-				"status": "published",
-				"data": {
-					"title": "付き合いが長くなったとき、大切にしたいのは？",
-					"options": [
-						{
-							"label": "記念日やふたりの習慣を続けること",
-							"type": "sunshine"
-						},
-						{
-							"label": "マンネリしないよう、新しいことに挑戦すること",
-							"type": "spark"
-						},
-						{
-							"label": "生活を支え合える、落ち着いた関係",
-							"type": "harbor"
-						},
-						{
-							"label": "お互いのひとりの時間を尊重すること",
-							"type": "moonlight"
-						}
-					],
-					"sort_order": 8
-				}
-			}
-		],
-		"posts": [
-			{
-				"id": "post-four-types",
-				"slug": "how-to-read-four-love-types",
-				"status": "published",
-				"data": {
-					"title": "4つの恋愛タイプと、診断を読み解く2つの軸",
+					"title": "The Case for Static",
+					"excerpt": "Static sites aren't a step backwards. They're what you get when you take performance and simplicity seriously.",
 					"featured_image": {
 						"$media": {
-							"url": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1200&h=800&fit=crop",
-							"alt": "ぼやけた光がハートの形に浮かぶ写真",
-							"filename": "four-love-types.jpg"
+							"url": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&h=800&fit=crop",
+							"alt": "Laptop and coffee on a wooden table",
+							"filename": "case-for-static.jpg"
 						}
 					},
-					"excerpt": "ひだまり型・ときめき型・港型・月光型。4つのタイプは「気持ちの伝え方」と「心地いい距離感」の組み合わせでできています。",
 					"content": [
 						{
 							"_type": "block",
@@ -1029,11 +436,23 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "この診断では、恋愛のスタイルを2つの軸で捉えています。ひとつは気持ちを言葉で伝えるか、態度や行動で示すか。もうひとつは、恋人といつも一緒にいたいか、お互いの時間も大切にしたいか。この2つを組み合わせると、4つのタイプが生まれます。",
-									"_key": "k59"
+									"text": "There's a certain irony in the fact that the web started static, went dynamic, and is now swinging back toward static again. But the static sites of today aren't the hand-coded HTML pages of 1998. They're generated, optimized, and deployed to edge networks that serve them in milliseconds.",
+									"_key": "k1"
 								}
 							],
-							"_key": "k60"
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The pitch for server-rendered everything was compelling: dynamic content, personalization, real-time data. But most sites don't need most of that most of the time. A blog post doesn't need to be rendered on every request. A product page doesn't change every second.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
 						},
 						{
 							"_type": "block",
@@ -1041,11 +460,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "軸1：気持ちの伝え方",
-									"_key": "k61"
+									"text": "The performance argument",
+									"_key": "k5"
 								}
 							],
-							"_key": "k62"
+							"_key": "k4"
 						},
 						{
 							"_type": "block",
@@ -1053,23 +472,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "「好き」や「ありがとう」をはっきり口にする人もいれば、言葉にするのは照れくさく、行動で示す人もいます。どちらが正しいということはありません。大切なのは、自分と相手の伝え方が違うかもしれないと知っておくことです。",
-									"_key": "k63"
+									"text": "A static file served from a CDN is as fast as the web gets. No cold starts, no database queries, no server-side rendering overhead. The Time to First Byte is essentially the network latency to your nearest edge node. You can't beat physics.",
+									"_key": "k7"
 								}
 							],
-							"_key": "k64"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "軸2：心地いい距離感",
-									"_key": "k65"
-								}
-							],
-							"_key": "k66"
+							"_key": "k6"
 						},
 						{
 							"_type": "block",
@@ -1077,91 +484,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "毎日会いたい、連絡を取り合いたいと感じる人もいれば、ひとりの時間があるからこそ恋人を大切にできる人もいます。距離感の違いは、すれ違いの大きな原因になりがちです。",
-									"_key": "k67"
+									"text": "And when you do need dynamic behavior, you can add it surgically. An island of interactivity in a sea of static HTML. The best of both worlds, without paying the cost of either at all times.",
+									"_key": "k9"
 								}
 							],
-							"_key": "k68"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "4つのタイプ",
-									"_key": "k69"
-								}
-							],
-							"_key": "k70"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "ひだまり型：言葉で伝える × いつも一緒にいたい",
-									"_key": "k71"
-								}
-							],
-							"_key": "k72",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "ときめき型：言葉で伝える × 自分の時間も大切",
-									"_key": "k73"
-								}
-							],
-							"_key": "k74",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "港型：行動で示す × いつも一緒にいたい",
-									"_key": "k75"
-								}
-							],
-							"_key": "k76",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "月光型：行動で示す × 自分の時間も大切",
-									"_key": "k77"
-								}
-							],
-							"_key": "k78",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "診断結果は、あなたの今の傾向を映したものです。恋をする相手や状況によってタイプが変わるのも自然なこと。ときどき診断し直して、変化を楽しんでみてください。",
-									"_key": "k79"
-								}
-							],
-							"_key": "k80"
+							"_key": "k8"
 						}
 					]
 				},
@@ -1171,28 +498,24 @@
 					}
 				],
 				"taxonomies": {
-					"category": [
-						"basics"
-					],
-					"tag": [
-						"love-types"
-					]
+					"category": ["development"],
+					"tag": ["webdev", "opinion"]
 				}
 			},
 			{
-				"id": "post-messaging",
-				"slug": "messaging-frequency-by-type",
+				"id": "post-3",
+				"slug": "learning-in-public",
 				"status": "published",
 				"data": {
-					"title": "連絡頻度でモメないために。タイプ別「ちょうどいい距離」の見つけ方",
+					"title": "Learning in Public",
+					"excerpt": "Writing about what you're learning is the fastest way to find out what you don't actually understand.",
 					"featured_image": {
 						"$media": {
-							"url": "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=1200&h=800&fit=crop",
-							"alt": "夕焼けを背に寄り添うふたりのシルエット",
-							"filename": "messaging-frequency.jpg"
+							"url": "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=1200&h=800&fit=crop",
+							"alt": "Notebook and pen on a desk",
+							"filename": "learning-in-public.jpg"
 						}
 					},
-					"excerpt": "「返信が遅い」「連絡が多すぎる」。連絡頻度のすれ違いは、どちらかが悪いわけではありません。タイプごとの感じ方の違いを知っておきましょう。",
 					"content": [
 						{
 							"_type": "block",
@@ -1200,11 +523,23 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "付き合い始めのカップルが最初にぶつかりやすいのが、連絡頻度の問題です。片方は毎日やりとりしたいのに、もう片方は用事があるときだけでいい。この差は愛情の量ではなく、心地いい距離感の違いから生まれます。",
-									"_key": "k81"
+									"text": "I started writing about things I was learning not because I had anything original to say, but because I kept forgetting what I'd figured out. The blog posts were notes to my future self, published publicly more out of laziness than courage.",
+									"_key": "k1"
 								}
 							],
-							"_key": "k82"
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "What I didn't expect was how much the writing itself would accelerate the learning. There's a particular kind of clarity that comes from trying to explain something to someone else. The gaps in your understanding, which you can happily ignore when the knowledge lives only in your head, become painfully obvious when you try to put it into sentences.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
 						},
 						{
 							"_type": "block",
@@ -1212,11 +547,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "いつも一緒にいたいタイプ（ひだまり型・港型）",
-									"_key": "k83"
+									"text": "The fear of being wrong",
+									"_key": "k5"
 								}
 							],
-							"_key": "k84"
+							"_key": "k4"
 						},
 						{
 							"_type": "block",
@@ -1224,23 +559,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "連絡が途切れると不安になりやすいタイプです。相手にとっての「普通」が自分より少ないかもしれない、と知っておくだけで、返信が来ない時間の受け止め方が変わります。",
-									"_key": "k85"
+									"text": "The biggest barrier isn't time or writing skill. It's the fear of publishing something that turns out to be wrong. But here's the thing: being wrong publicly is one of the most efficient ways to learn. Someone will correct you, often kindly, and you'll remember that correction forever.",
+									"_key": "k7"
 								}
 							],
-							"_key": "k86"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "自分の時間も大切にしたいタイプ（ときめき型・月光型）",
-									"_key": "k87"
-								}
-							],
-							"_key": "k88"
+							"_key": "k6"
 						},
 						{
 							"_type": "block",
@@ -1248,109 +571,33 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "連絡を求められすぎると窮屈に感じるタイプです。とはいえ、相手は不安を抱えているかもしれません。「今日は忙しいから夜に返すね」とひとこと送るだけで、相手の安心感は大きく変わります。",
-									"_key": "k89"
+									"text": "The posts that helped me most weren't written by experts. They were written by people one step ahead of me on the same path, in language that hadn't yet been polished into abstraction. There's a place for that kind of writing, and it's more valuable than most people realize.",
+									"_key": "k9"
 								}
 							],
-							"_key": "k90"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "ふたりのルールをつくる",
-									"_key": "k91"
-								}
-							],
-							"_key": "k92"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "おやすみの連絡だけは毎日するなど、最低限の約束を決める",
-									"_key": "k93"
-								}
-							],
-							"_key": "k94",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "忙しい時期は、先にそれを伝えておく",
-									"_key": "k95"
-								}
-							],
-							"_key": "k96",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "返信の速さではなく、会ったときの時間を大切にする",
-									"_key": "k97"
-								}
-							],
-							"_key": "k98",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "どちらかが我慢し続ける関係は長続きしません。お互いのタイプを知ったうえで、ふたりにとっての「ちょうどいい」を話し合ってみてください。",
-									"_key": "k99"
-								}
-							],
-							"_key": "k100"
+							"_key": "k8"
 						}
 					]
 				},
-				"bylines": [
-					{
-						"byline": "byline-editorial"
-					}
-				],
 				"taxonomies": {
-					"category": [
-						"communication"
-					],
-					"tag": [
-						"messaging",
-						"couples"
-					]
+					"category": ["notes"],
+					"tag": ["opinion"]
 				}
 			},
 			{
-				"id": "post-compatibility",
-				"slug": "opposite-types-compatibility",
+				"id": "post-4",
+				"slug": "small-tools-big-impact",
 				"status": "published",
 				"data": {
-					"title": "正反対のタイプは相性が悪い？ 違いが強みになるふたりの関係",
+					"title": "Small Tools, Big Impact",
+					"excerpt": "The best developer tools do one thing well and get out of your way. A love letter to focused software.",
 					"featured_image": {
 						"$media": {
-							"url": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1200&h=800&fit=crop",
-							"alt": "夕日の前で両手でハートをつくる写真",
-							"filename": "opposite-types.jpg"
+							"url": "https://images.unsplash.com/photo-1575026615908-666710ae5e47?w=1200&h=800&fit=crop",
+							"alt": "Wrenches and hand tools hanging on a workshop wall",
+							"filename": "small-tools.jpg"
 						}
 					},
-					"excerpt": "自分と真逆のタイプの人に惹かれることは珍しくありません。違いをすれ違いではなく補い合いに変えるヒントをまとめました。",
 					"content": [
 						{
 							"_type": "block",
@@ -1358,11 +605,23 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "診断結果で「相性のいいタイプ」として紹介しているのは、必ずしも自分と似たタイプではありません。たとえばひだまり型と港型は、伝え方は違っても「一緒にいたい」気持ちが同じなので、自然と支え合える組み合わせです。",
-									"_key": "k101"
+									"text": "There's a class of software that doesn't get enough appreciation. Not the frameworks or the platforms or the IDEs, but the small, sharp tools that solve one problem so well you stop thinking about them. They become invisible, which is the highest compliment you can pay a tool.",
+									"_key": "k1"
 								}
 							],
-							"_key": "k102"
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "I'm talking about things like ripgrep, which searches code so fast it changed how I think about searching. Or jq, which makes JSON feel like a first-class data format in the terminal. Or curl, which has been quietly powering the internet's plumbing for decades.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
 						},
 						{
 							"_type": "block",
@@ -1370,11 +629,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "違うからこそ補い合える",
-									"_key": "k103"
+									"text": "The Unix philosophy, revisited",
+									"_key": "k5"
 								}
 							],
-							"_key": "k104"
+							"_key": "k4"
 						},
 						{
 							"_type": "block",
@@ -1382,23 +641,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "言葉で伝えるタイプは、行動で示すタイプの気づかいに安心をもらえます。行動で示すタイプは、言葉で伝えるタイプのおかげで、自分の気持ちを確かめられます。違いは、ふたりの関係に足りないものを持ち寄るきっかけになります。",
-									"_key": "k105"
+									"text": "Do one thing well. The advice is old enough to be a cliche, but the best modern tools still follow it. They don't try to be platforms. They don't have plugin ecosystems or configuration languages or startup wizards. They do their job and they compose with other tools that do theirs.",
+									"_key": "k7"
 								}
 							],
-							"_key": "k106"
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "すれ違いやすいポイント",
-									"_key": "k107"
-								}
-							],
-							"_key": "k108"
+							"_key": "k6"
 						},
 						{
 							"_type": "block",
@@ -1406,89 +653,33 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "「言ってくれないとわからない」と「言わなくてもわかってほしい」",
-									"_key": "k109"
+									"text": "The temptation is always to add more. One more feature, one more option, one more integration. But every addition is a decision someone has to make, a path through the code that has to be maintained, a thing that can break. The best tools resist this. They stay small, and in staying small, they stay reliable.",
+									"_key": "k9"
 								}
 							],
-							"_key": "k110",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "「もっと会いたい」と「ひとりの時間もほしい」",
-									"_key": "k111"
-								}
-							],
-							"_key": "k112",
-							"listItem": "bullet",
-							"level": 1
-						},
-						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "うまくいくふたりの共通点",
-									"_key": "k113"
-								}
-							],
-							"_key": "k114"
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "相性のよさは、タイプの組み合わせだけで決まるものではありません。自分のタイプを知り、相手のタイプに興味を持つこと。それがどんな組み合わせのふたりにとっても、いちばんの近道です。",
-									"_key": "k115"
-								}
-							],
-							"_key": "k116"
-						},
-						{
-							"_type": "block",
-							"style": "blockquote",
-							"children": [
-								{
-									"_type": "span",
-									"text": "気になる人がいるなら、ふたりで一緒に診断してみるのもおすすめです。",
-									"_key": "k117"
-								}
-							],
-							"_key": "k118"
+							"_key": "k8"
 						}
 					]
 				},
-				"bylines": [
-					{
-						"byline": "byline-editorial"
-					}
-				],
 				"taxonomies": {
-					"category": [
-						"compatibility"
-					],
-					"tag": [
-						"love-types",
-						"crush"
-					]
+					"category": ["development"],
+					"tag": ["tools"]
 				}
-			}
-		],
-		"pages": [
+			},
 			{
-				"id": "about",
-				"slug": "about",
+				"id": "post-5",
+				"slug": "designing-with-constraints",
 				"status": "published",
 				"data": {
-					"title": "このサイトについて",
+					"title": "Designing with Constraints",
+					"excerpt": "Limitations aren't obstacles to creativity. They're the structure that makes creativity possible.",
+					"featured_image": {
+						"$media": {
+							"url": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=1200&h=800&fit=crop",
+							"alt": "Pencils and design tools on a desk",
+							"filename": "designing-with-constraints.jpg"
+						}
+					},
 					"content": [
 						{
 							"_type": "block",
@@ -1496,11 +687,23 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "aitypeは、8つの質問に答えるだけで、あなたの恋愛の傾向を4つのタイプで読み解く診断サイトです。",
-									"_key": "k119"
+									"text": "Give a designer a blank canvas and unlimited time, and they'll often produce something mediocre. Give them a tight brief, a small screen, and a deadline, and they'll surprise you. This isn't a paradox - it's how creativity actually works.",
+									"_key": "k1"
 								}
 							],
-							"_key": "k120"
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Constraints force decisions. When you can't use more than two typefaces, you have to choose carefully. When the page has to load in under a second, every element earns its place. When the interface has to work on a 320px screen, you discover what's truly essential.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
 						},
 						{
 							"_type": "block",
@@ -1508,11 +711,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "診断のしくみ",
-									"_key": "k121"
+									"text": "Embracing the box",
+									"_key": "k5"
 								}
 							],
-							"_key": "k122"
+							"_key": "k4"
 						},
 						{
 							"_type": "block",
@@ -1520,11 +723,69 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "それぞれの質問の選択肢は、4つのタイプのどれかに対応しています。いちばん多く選んだタイプが、あなたの恋愛タイプです。同じ数になったときは、タイプ一覧で先に並んでいるタイプを結果として表示します。",
-									"_key": "k123"
+									"text": "The web itself is a constraint. HTML flows in one direction. CSS has a box model. Browsers have viewport sizes and font rendering quirks. You can fight these constraints or you can work with them, and the results are dramatically different.",
+									"_key": "k7"
 								}
 							],
-							"_key": "k124"
+							"_key": "k6"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The designs I admire most don't look like they were forced through a framework. They look like they grew naturally from the medium, respecting its grain rather than working against it. That only happens when you treat constraints as creative partners rather than enemies.",
+									"_key": "k9"
+								}
+							],
+							"_key": "k8"
+						}
+					]
+				},
+				"taxonomies": {
+					"category": ["design"],
+					"tag": ["creativity"]
+				}
+			},
+			{
+				"id": "post-6",
+				"slug": "a-weekend-with-a-side-project",
+				"status": "published",
+				"data": {
+					"title": "A Weekend with a Side Project",
+					"excerpt": "No stakeholders, no deadlines, no Jira tickets. Just you and a dumb idea that might turn into something.",
+					"featured_image": {
+						"$media": {
+							"url": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=1200&h=800&fit=crop",
+							"alt": "Code on a screen with a dark theme",
+							"filename": "weekend-side-project.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Saturday morning. Coffee's made, the house is quiet, and I've got an idea that's been nagging at me all week. Not a good idea, necessarily - just a persistent one. A small tool that does a thing I keep doing manually. How hard could it be?",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "This is the best kind of programming. No requirements document, no sprint planning, no pull request reviews. Just a text editor and a problem. The freedom to make terrible architectural decisions, rewrite everything twice, and follow tangents that turn out to be dead ends.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
 						},
 						{
 							"_type": "block",
@@ -1532,11 +793,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "ご利用にあたって",
-									"_key": "k125"
+									"text": "Why side projects matter",
+									"_key": "k5"
 								}
 							],
-							"_key": "k126"
+							"_key": "k4"
 						},
 						{
 							"_type": "block",
@@ -1544,11 +805,11 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "この診断は、楽しみながら自分を知るためのものです。心理学的な検査や医学的な判断ではありません。結果はひとつの見方として、気軽に受け止めてください。",
-									"_key": "k127"
+									"text": "Side projects are where you learn things your day job would never teach you. Not because the problems are harder, but because you're free to take risks. Try a language you've never used. Build something without a framework. Deploy to a platform you've only read about. The stakes are zero, which makes the learning maximum.",
+									"_key": "k7"
 								}
 							],
-							"_key": "k128"
+							"_key": "k6"
 						},
 						{
 							"_type": "block",
@@ -1556,11 +817,120 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "回答内容はサイトに保存されません。結果を表示するためだけに使われます。",
-									"_key": "k129"
+									"text": "By Sunday evening, the thing sort of works. It's rough, the error handling is nonexistent, and the README is a single sentence. But it solves the problem I set out to solve, and I learned three things I didn't know on Friday. Not a bad weekend.",
+									"_key": "k9"
 								}
 							],
-							"_key": "k130"
+							"_key": "k8"
+						}
+					]
+				},
+				"taxonomies": {
+					"category": ["development"],
+					"tag": ["creativity"]
+				}
+			},
+			{
+				"id": "post-7",
+				"slug": "notes-on-simplicity",
+				"status": "published",
+				"data": {
+					"title": "Notes on Simplicity",
+					"excerpt": "Simplicity isn't the absence of complexity. It's the result of understanding a problem well enough to solve it cleanly.",
+					"featured_image": {
+						"$media": {
+							"url": "https://images.unsplash.com/photo-1559051668-e1fa58f25786?w=1200&h=800&fit=crop",
+							"alt": "Geometric pattern carved into white paper",
+							"filename": "notes-on-simplicity.jpg"
+						}
+					},
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Every piece of software starts simple. A few files, a clear purpose, a small surface area. Then features get added, edge cases get handled, and before long you're looking at something that requires a diagram to understand. This isn't inevitable, but it takes discipline to prevent.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The hard part of simplicity isn't the initial design. It's the ongoing resistance to complication. Every feature request, every bug fix, every refactor is an opportunity to add complexity. Saying no is the most important design skill, and the least celebrated.",
+									"_key": "k3"
+								}
+							],
+							"_key": "k2"
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Removing as a feature",
+									"_key": "k5"
+								}
+							],
+							"_key": "k4"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "The best version of a product often has fewer features than the previous one. Not because features were missing, but because someone had the courage to remove things that weren't earning their keep. Every feature has a cost - in maintenance, in cognitive load, in the weight of the interface.",
+									"_key": "k7"
+								}
+							],
+							"_key": "k6"
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "Simplicity is a practice, not a destination. You never arrive at simple. You just keep asking: is this necessary? Could this be clearer? Is there a way to solve this problem by removing something instead of adding something? The answer is yes more often than you'd expect.",
+									"_key": "k9"
+								}
+							],
+							"_key": "k8"
+						}
+					]
+				},
+				"taxonomies": {
+					"category": ["notes"],
+					"tag": ["opinion"]
+				}
+			},
+			{
+				"id": "post-draft",
+				"slug": "work-in-progress",
+				"status": "draft",
+				"data": {
+					"title": "Work in Progress",
+					"excerpt": "This post is still being written.",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "This is a draft post that won't appear in the public listing.",
+									"_key": "k1"
+								}
+							],
+							"_key": "k0"
 						}
 					]
 				}

@@ -34,7 +34,7 @@ const postsWithTags = posts.map((post) => ({
 }));
 ---
 
-<Base title="恋愛コラム" description="恋愛タイプ診断の結果をもっと活かすための恋愛コラム一覧">
+<Base title="All Posts" description="Browse all blog posts">
 	<header class="band intro">
 		<div class="frame">
 			<p class="eyebrow">Archive</p>
@@ -49,17 +49,17 @@ const postsWithTags = posts.map((post) => ({
 				posts.length === 0 ? (
 					<div class="empty-state">
 						<h2 class="empty-state__title">
-							{cursor ? "これ以上コラムはありません" : "まだコラムがありません"}
+							{cursor ? "No more posts" : "No posts yet"}
 						</h2>
 						<p class="empty-state__text">
 							{cursor
-								? "すべてのコラムを表示しました。"
-								: "公開したコラムがここに表示されます。"}
+								? "You have reached the end of the archive."
+								: "Published posts will show up here."}
 						</p>
 						{cursor && (
 							<div class="empty-state__actions">
 								<a href="/posts" class="btn btn--ghost">
-									最初のページ
+									First page
 								</a>
 							</div>
 						)}
