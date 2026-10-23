@@ -1,10 +1,5 @@
 ---
-import {
-	getEmDashEntry,
-	getSeoMeta,
-	decodeSlug,
-	getSiteSettings,
-} from "emdash";
+import { getEmDashEntry, decodeSlug, getSiteSettings } from "emdash";
 import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
@@ -23,22 +18,12 @@ if (!page) {
 }
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+// Pages have no title or SEO fields; the tab shows the site title.
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
-// Pages have no title field; the tab title comes from the SEO panel,
-// falling back to the site title.
-const seo = getSeoMeta(page, {
-	siteTitle,
-	siteUrl: Astro.url.origin,
-	path: Astro.url.pathname.replace(/\/$/, ""),
-});
 ---
 
 <Base
-	title={seo.title || siteTitle}
-	pageTitle={seo.ogTitle || siteTitle}
-	description={seo.description}
-	canonical={seo.canonical}
-	robots={seo.robots}
+	title={siteTitle}
 	content={{ collection: "pages", id: page.data.id, slug }}
 >
 	<article class="band page">

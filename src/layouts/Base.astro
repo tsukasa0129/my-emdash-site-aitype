@@ -33,7 +33,8 @@ const {
 	description,
 	image,
 	canonical,
-	robots,
+	// Ad landing pages only: keep every page out of search results
+	robots = "noindex, nofollow",
 	type = "website",
 	publishedTime,
 	modifiedTime,
