@@ -30,8 +30,8 @@ const seo = getSeoMeta(page, {
 	path: Astro.url.pathname.replace(/\/$/, ""),
 });
 
-// Landing pages drop the site chrome and the visible title; the article
-// body carries its own headline.
+// Landing pages drop the site chrome and the visible title, and keep a
+// phone-width column; the article body carries its own headline.
 const isLanding = page.data.layout === "lp";
 ---
 
@@ -45,6 +45,8 @@ const isLanding = page.data.layout === "lp";
 	bare={isLanding}
 >
 	<article class="band page">
+		{/* Landing pages read like a phone screen at every viewport width */}
+		{isLanding && <style is:inline set:html=":root { --wide-width: 480px; }" />}
 		<div class:list={["frame page__layout", { "page__layout--landing": isLanding }]}>
 			<header class:list={["page__header", { "sr-only": isLanding }]}>
 				<h1 class="page__title" {...page.edit.title}>{page.data.title}</h1>
