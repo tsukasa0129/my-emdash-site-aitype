@@ -27,7 +27,7 @@ function escapeHtml(text: string) {
 // title. When it is the whole title, show its highlights in the heading
 // instead of repeating the title underneath.
 const rows = results.map((result) => {
-	const title = result.title ?? "Untitled";
+	const title = result.title ?? "無題";
 	const snippetIsTitle =
 		result.snippet?.replaceAll("<mark>", "").replaceAll("</mark>", "") ===
 		escapeHtml(title);
@@ -40,13 +40,13 @@ const rows = results.map((result) => {
 });
 
 const countLabel = nextCursor
-	? `Top ${rows.length} results`
-	: `${rows.length} ${rows.length === 1 ? "result" : "results"}`;
+	? `上位${rows.length}件`
+	: `${rows.length}件`;
 ---
 
 <Base
-	title={query ? `Search: ${query}` : "Search"}
-	description="Search blog posts"
+	title={query ? `「${query}」の検索結果` : "検索"}
+	description="恋愛コラムを検索"
 >
 	<header class="band intro">
 		<div class="frame">
@@ -56,7 +56,7 @@ const countLabel = nextCursor
 				method="get"
 				action="/search"
 				role="search"
-				aria-label="Posts"
+				aria-label="コラム"
 				class="search-form"
 			>
 				<label for="search-query" class="sr-only">Search posts</label>
@@ -79,7 +79,7 @@ const countLabel = nextCursor
 						type="search"
 						name="q"
 						value={query}
-						placeholder="Search posts"
+						placeholder="コラムを検索"
 						autofocus={!query}
 					/>
 					<button type="submit" class="btn search-field__submit">Search</button>
@@ -88,8 +88,8 @@ const countLabel = nextCursor
 			{
 				!query && (
 					<p class="search-hint">
-						Searches post titles and full text. Not sure where to start?{" "}
-						<a href="/posts">Browse all posts</a>.
+						コラムのタイトルと本文から検索します。{" "}
+						<a href="/posts">コラム一覧</a>から探すこともできます。
 					</p>
 				)
 			}
@@ -104,10 +104,10 @@ const countLabel = nextCursor
 						<>
 							<div class="section-head">
 								<p class="search-summary">
-									<strong>{countLabel}</strong> for “{query}”
+									「{query}」の検索結果 <strong>{countLabel}</strong>
 								</p>
 								<a href="/posts" class="arrow-link">
-									All posts
+									コラム一覧
 									<svg
 										viewBox="0 0 24 24"
 										fill="none"
@@ -163,12 +163,11 @@ const countLabel = nextCursor
 						<div class="empty-state">
 							<h2 class="empty-state__title">No results for “{query}”</h2>
 							<p class="empty-state__text">
-								Check the spelling, try fewer or different words, or browse
-								every post instead.
+								言葉を変えるか短くして、もう一度お試しください。コラム一覧から探すこともできます。
 							</p>
 							<div class="empty-state__actions">
 								<a href="/posts" class="btn btn--ghost">
-									Browse all posts
+									コラム一覧へ
 								</a>
 							</div>
 						</div>

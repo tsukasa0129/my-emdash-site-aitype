@@ -2,24 +2,24 @@
 import Base from "../layouts/Base.astro";
 ---
 
-<Base title="Page not found">
+<Base title="ページが見つかりません">
 	<section class="band not-found">
 		<div class="not-found__backdrop" aria-hidden="true"></div>
 		<div class="frame not-found__inner">
 			<p class="eyebrow not-found__code">Error 404</p>
-			<h1 class="intro__title">Page not found</h1>
+			<h1 class="intro__title">ページが見つかりません</h1>
 			<p class="intro__lead">
-				The page you’re looking for doesn’t exist or may have moved.
+				お探しのページは存在しないか、移動した可能性があります。
 			</p>
 			<div class="not-found__actions">
-				<a href="/" class="btn">Go home</a>
-				<a href="/posts" class="btn btn--ghost">Browse posts</a>
+				<a href="/" class="btn">トップへ戻る</a>
+				<a href="/posts" class="btn btn--ghost">コラムを見る</a>
 			</div>
 			<form
 				method="get"
 				action="/search"
 				role="search"
-				aria-label="Posts"
+				aria-label="コラム"
 				class="not-found__search"
 			>
 				<label for="not-found-query" class="sr-only">Search posts</label>
@@ -40,12 +40,12 @@ import Base from "../layouts/Base.astro";
 					class="not-found__search-input"
 					type="search"
 					name="q"
-					placeholder="Or search posts"
+					placeholder="コラムを検索"
 				/>
 				<button
 					type="submit"
 					class="btn not-found__search-submit"
-					aria-label="Search"
+					aria-label="検索"
 				>
 					<svg
 						viewBox="0 0 24 24"

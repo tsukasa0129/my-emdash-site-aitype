@@ -5,6 +5,28 @@
 
 import type { BylineSummary, ContentBylineCredit, TaxonomyTerm, PortableTextBlock } from "emdash";
 
+export interface LoveType {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  catchphrase?: string;
+  summary?: string;
+  featured_image?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
+  content?: PortableTextBlock[];
+  strengths?: string;
+  cautions?: string;
+  advice?: string;
+  best_match?: "sunshine" | "spark" | "harbor" | "moonlight";
+  sort_order?: number;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  byline?: BylineSummary | null;
+  bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
+}
+
 export interface Page {
   id: string;
   slug: string | null;
@@ -24,7 +46,7 @@ export interface Post {
   slug: string | null;
   status: string;
   title: string;
-  featured_image?: { id: string; src?: string; alt?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
+  featured_image?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
   content?: PortableTextBlock[];
   excerpt?: string;
   createdAt: Date;
@@ -35,9 +57,26 @@ export interface Post {
   terms?: Record<string, TaxonomyTerm[]>;
 }
 
+export interface Question {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  options: { "label": string; "type": "sunshine" | "spark" | "harbor" | "moonlight" }[];
+  sort_order?: number;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  byline?: BylineSummary | null;
+  bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
+}
+
 declare module "emdash" {
   interface EmDashCollections {
+    love_types: LoveType;
     pages: Page;
     posts: Post;
+    questions: Question;
   }
 }

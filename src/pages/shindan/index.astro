@@ -1,0 +1,277 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getQuestions } from "../../utils/love-types";
+
+const { questions, cacheHint } = await getQuestions();
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+---
+
+<Base
+	title="恋愛タイプ診断"
+	description={`${questions.length}つの質問に答えて、あなたの恋愛タイプと相性のいいタイプを診断します。`}
+>
+	<header class="band intro">
+		<div class="frame">
+			<p class="eyebrow">診断</p>
+			<h1 class="intro__title">恋愛タイプ診断</h1>
+			<p class="intro__lead">
+				直感で、いちばん近いものを選んでください。全{questions.length}問、回答は保存されません。
+			</p>
+		</div>
+	</header>
+
+	<section class="band section">
+		<div class="frame">
+			{
+				questions.length === 0 ? (
+					<div class="empty-state">
+						<h2 class="empty-state__title">質問がまだありません</h2>
+						<p class="empty-state__text">
+							管理画面の「診断の質問」から質問を追加してください。
+						</p>
+						<div class="empty-state__actions">
+							<a href="/_emdash/admin/content/questions/new" class="btn">
+								質問を追加する
+							</a>
+						</div>
+					</div>
+				) : (
+					<form
+						class="quiz"
+						method="get"
+						action="/shindan/result"
+						data-quiz
+					>
+						<div class="quiz__progress" aria-hidden="true" hidden data-progress>
+							<span class="eyebrow" data-progress-label />
+							<span class="quiz__bar">
+								<span class="quiz__bar-fill" data-progress-fill />
+							</span>
+						</div>
+
+						{questions.map(({ entry, options }, qi) => (
+							<fieldset class="question" data-question>
+								<legend class="question__legend">
+									<span class="eyebrow">
+										Q{qi + 1} / {questions.length}
+									</span>
+									<span class="question__title" {...entry.edit.title}>
+										{entry.data.title}
+									</span>
+								</legend>
+								<div class="question__options">
+									{options.map((option, oi) => (
+										<label class="option">
+											<input
+												type="radio"
+												name={entry.data.id}
+												value={oi}
+												required
+											/>
+											<span>{option.label}</span>
+										</label>
+									))}
+								</div>
+							</fieldset>
+						))}
+
+						<div class="quiz__nav">
+							<button
+								type="button"
+								class="btn btn--ghost"
+								hidden
+								data-back
+							>
+								前の質問へ
+							</button>
+							<button type="submit" class="btn" data-submit>
+								結果を見る
+							</button>
+						</div>
+					</form>
+				)
+			}
+		</div>
+	</section>
+</Base>
+
+<style>
+	.quiz {
+		display: grid;
+		gap: var(--spacing-8);
+		max-width: var(--content-width);
+	}
+
+	.quiz__progress {
+		display: grid;
+		gap: var(--spacing-2);
+	}
+
+	.quiz__bar {
+		display: block;
+		height: 4px;
+		border-radius: var(--radius-full);
+		background: var(--color-fill);
+		overflow: hidden;
+	}
+
+	.quiz__bar-fill {
+		display: block;
+		height: 100%;
+		width: 0;
+		background: var(--color-brand);
+		transition: width var(--transition-base);
+	}
+
+	.question {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		min-width: 0;
+	}
+
+	.question__legend {
+		display: grid;
+		gap: var(--spacing-2);
+		padding: 0;
+		margin-bottom: var(--spacing-5);
+	}
+
+	.question__title {
+		font-size: var(--font-size-2xl);
+		font-weight: var(--font-weight-heading);
+		line-height: var(--leading-snug);
+		text-wrap: pretty;
+	}
+
+	.question__options {
+		display: grid;
+		gap: var(--spacing-3);
+	}
+
+	.option {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-3);
+		padding: var(--spacing-4) var(--spacing-5);
+		border-radius: var(--radius-lg);
+		background: var(--color-surface);
+		box-shadow:
+			0 0 0 1px var(--color-border),
+			var(--shadow-sm);
+		line-height: var(--leading-normal);
+		cursor: pointer;
+		transition: box-shadow var(--transition-fast);
+	}
+
+	.option:hover {
+		box-shadow:
+			0 0 0 1px var(--color-border-strong),
+			var(--shadow-sm);
+	}
+
+	.option:has(input:checked) {
+		box-shadow:
+			0 0 0 2px var(--color-brand),
+			var(--shadow-sm);
+	}
+
+	.option:has(input:focus-visible) {
+		outline: 2px solid var(--color-brand);
+		outline-offset: 2px;
+	}
+
+	.option input {
+		flex-shrink: 0;
+		width: 1.125rem;
+		height: 1.125rem;
+		margin: 0;
+		accent-color: var(--color-brand);
+	}
+
+	.quiz__nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-3);
+	}
+
+	/* One question at a time once the script has taken over */
+	.quiz[data-stepping] .question:not([data-current]) {
+		display: none;
+	}
+
+	.quiz[data-stepping]:not([data-last]) [data-submit] {
+		display: none;
+	}
+</style>
+
+<script>
+	// Progressive enhancement: show one question at a time and advance on
+	// answer. Without JS the form shows every question and submits normally.
+	function initQuiz() {
+		const form = document.querySelector<HTMLFormElement>("[data-quiz]");
+		if (!form || form.dataset.stepping !== undefined) return;
+		const questions = [
+			...form.querySelectorAll<HTMLFieldSetElement>("[data-question]"),
+		];
+		const back = form.querySelector<HTMLButtonElement>("[data-back]");
+		const progress = form.querySelector<HTMLElement>("[data-progress]");
+		const label = form.querySelector<HTMLElement>("[data-progress-label]");
+		const fill = form.querySelector<HTMLElement>("[data-progress-fill]");
+		if (questions.length === 0 || !back || !progress || !label || !fill) return;
+
+		let current = 0;
+		form.dataset.stepping = "";
+		progress.hidden = false;
+
+		function show(index: number) {
+			current = index;
+			questions.forEach((q, i) => {
+				q.toggleAttribute("data-current", i === index);
+			});
+			form!.toggleAttribute("data-last", index === questions.length - 1);
+			back!.hidden = index === 0;
+			label!.textContent = `${index + 1} / ${questions.length}`;
+			fill!.style.width = `${(index / questions.length) * 100}%`;
+		}
+
+		form.addEventListener("change", (event) => {
+			const target = event.target as HTMLElement;
+			const fieldset = target.closest("[data-question]");
+			const index = questions.indexOf(fieldset as HTMLFieldSetElement);
+			if (index === -1) return;
+			if (index < questions.length - 1) {
+				setTimeout(() => {
+					show(index + 1);
+					questions[index + 1]
+						.querySelector<HTMLInputElement>("input")
+						?.focus({ preventScroll: true });
+				}, 180);
+			} else {
+				fill!.style.width = "100%";
+			}
+		});
+
+		back.addEventListener("click", () => {
+			if (current > 0) show(current - 1);
+		});
+
+		// If the browser blocks submit on an unanswered question, jump to it.
+		form.addEventListener(
+			"invalid",
+			(event) => {
+				const fieldset = (event.target as HTMLElement).closest(
+					"[data-question]",
+				);
+				const index = questions.indexOf(fieldset as HTMLFieldSetElement);
+				if (index !== -1 && index !== current) show(index);
+			},
+			true,
+		);
+
+		show(0);
+	}
+
+	initQuiz();
+	document.addEventListener("astro:page-load", initQuiz);
+</script>

@@ -52,8 +52,8 @@ const filteredPosts = posts.map((post) => ({
 ---
 
 <Base
-	title={`Posts tagged "${term.label}"`}
-	description={`All posts tagged with ${term.label}`}
+	title={`「${term.label}」タグのコラム`}
+	description={`「${term.label}」タグが付いたコラム一覧`}
 >
 	<header class="band intro">
 		<div class="frame archive-intro">
@@ -61,11 +61,11 @@ const filteredPosts = posts.map((post) => ({
 				<p class="eyebrow">Tag</p>
 				<h1 class="intro__title">{term.label}</h1>
 				<p class="intro__lead">
-					{term.description || `Posts tagged ${term.label}, newest first.`}
+					{term.description || `「${term.label}」タグのコラムを新しい順に並べています。`}
 				</p>
 			</div>
 			<a href="/posts" class="arrow-link">
-				All posts
+				コラム一覧
 				<svg
 					viewBox="0 0 24 24"
 					fill="none"
@@ -104,19 +104,19 @@ const filteredPosts = posts.map((post) => ({
 				) : (
 					<div class="empty-state">
 						<h2 class="empty-state__title">
-							{cursor ? "No more posts" : "Nothing here yet"}
+							{cursor ? "これ以上コラムはありません" : "まだコラムがありません"}
 						</h2>
 						<p class="empty-state__text">
 							{cursor
-								? "This page is past the last post."
-								: `No posts have been tagged ${term.label} so far.`}
+								? "最後のコラムより先のページです。"
+								: `「${term.label}」タグのコラムはまだありません。`}
 						</p>
 						<div class="empty-state__actions">
 							<a
 								href={cursor ? `/tag/${term.slug}` : "/posts"}
 								class="btn btn--ghost"
 							>
-								{cursor ? "Back to the first page" : "Browse all posts"}
+								{cursor ? "最初のページへ" : "コラム一覧へ"}
 							</a>
 						</div>
 					</div>

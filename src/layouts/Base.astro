@@ -138,7 +138,7 @@ const year = new Date().getFullYear();
 	</head>
 	<body>
 		<EmDashBodyStart page={pageCtx} />
-		<a href="#main" class="skip-link">Skip to content</a>
+		<a href="#main" class="skip-link">本文へスキップ</a>
 		<header class="site-header">
 			<div class="frame site-header__inner">
 				<a href="/" class="brand">
@@ -163,7 +163,7 @@ const year = new Date().getFullYear();
 				</a>
 				{
 					menuItems.length > 0 && (
-						<nav class="site-nav" aria-label="Main">
+						<nav class="site-nav" aria-label="メイン">
 							<ul>
 								{menuItems.map((item) => (
 									<li>
@@ -186,7 +186,7 @@ const year = new Date().getFullYear();
 					)
 				}
 				<div class="site-header__actions">
-					<div class="site-search" role="search" aria-label="Site">
+					<div class="site-search" role="search" aria-label="サイト内">
 						<svg
 							class="site-search__icon"
 							viewBox="0 0 24 24"
@@ -200,12 +200,12 @@ const year = new Date().getFullYear();
 							></path></svg
 						>
 						<LiveSearch
-							placeholder="Search"
+							placeholder="記事を検索"
 							class="site-search__field"
 							inputClass="site-search-input"
 							resultsClass="site-search-results"
 							resultClass="site-search-result"
-							collections={["posts", "pages"]}
+							collections={["posts", "pages", "love_types"]}
 						/>
 						<kbd class="site-search__kbd" aria-hidden="true"
 							><span dir="ltr">⌘K</span></kbd
@@ -214,7 +214,7 @@ const year = new Date().getFullYear();
 					<a
 						href="/search"
 						class="icon-btn site-search-link"
-						aria-label="Search"
+						aria-label="検索"
 					>
 						<svg
 							viewBox="0 0 24 24"
@@ -231,7 +231,7 @@ const year = new Date().getFullYear();
 					{
 						isLoggedIn && (
 							<a href="/_emdash/admin" class="btn btn--ghost btn--sm nav-admin">
-								Admin
+								管理画面
 							</a>
 						)
 					}
@@ -286,7 +286,7 @@ const year = new Date().getFullYear();
 					menuItems.length > 0 && (
 						<nav class="site-footer__col" aria-labelledby="footer-navigate">
 							<h2 id="footer-navigate" class="eyebrow">
-								Navigate
+								メニュー
 							</h2>
 							<ul class="site-footer__links">
 								{menuItems.map((item) => (
@@ -309,7 +309,7 @@ const year = new Date().getFullYear();
 					)
 				}
 				<div class="site-footer__col">
-					<h2 class="eyebrow">Connect</h2>
+					<h2 class="eyebrow">フォロー</h2>
 					<ul class="site-footer__links">
 						<li>
 							<a href="/rss.xml">
@@ -327,7 +327,7 @@ const year = new Date().getFullYear();
 										cy="19"
 										r="1"></circle></svg
 								>
-								RSS feed
+								RSSフィード
 							</a>
 						</li>
 					</ul>
@@ -342,12 +342,12 @@ const year = new Date().getFullYear();
 						{`© ${year} ${siteTitle}.`} Powered by{" "}
 						<a href="https://emdashcms.com">EmDash</a>
 					</p>
-					<div class="theme-switcher" role="group" aria-label="Color theme">
+					<div class="theme-switcher" role="group" aria-label="表示テーマ">
 						<button
 							type="button"
 							class="theme-btn"
 							data-theme="light"
-							aria-label="Light"
+							aria-label="ライト"
 						>
 							<svg
 								viewBox="0 0 24 24"
@@ -366,7 +366,7 @@ const year = new Date().getFullYear();
 							type="button"
 							class="theme-btn"
 							data-theme="dark"
-							aria-label="Dark"
+							aria-label="ダーク"
 						>
 							<svg
 								viewBox="0 0 24 24"
@@ -385,7 +385,7 @@ const year = new Date().getFullYear();
 							type="button"
 							class="theme-btn"
 							data-theme="system"
-							aria-label="System"
+							aria-label="端末の設定に合わせる"
 						>
 							<svg
 								viewBox="0 0 24 24"

@@ -6,6 +6,10 @@ import emdash from "emdash/astro";
 
 export default defineConfig({
 	output: "server",
+	i18n: {
+		defaultLocale: "ja",
+		locales: ["ja"],
+	},
 	adapter: cloudflare(),
 	image: {
 		layout: "constrained",
@@ -24,7 +28,14 @@ export default defineConfig({
 			name: "Inter",
 			cssVariable: "--font-body",
 			weights: [400, 500, 600, 700],
-			fallbacks: ["sans-serif"],
+			fallbacks: [
+				"Hiragino Sans",
+				"Hiragino Kaku Gothic ProN",
+				"Noto Sans JP",
+				"Yu Gothic",
+				"Meiryo",
+				"sans-serif",
+			],
 		},
 		{
 			provider: fontProviders.google(),
