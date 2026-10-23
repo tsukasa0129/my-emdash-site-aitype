@@ -82,6 +82,7 @@ const lang = getSiteLocale() ?? "en";
 		<Font cssVariable="--font-mono" />
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
+		<slot name="head" />
 	</head>
 	<body>
 		<EmDashBodyStart page={pageCtx} />
@@ -1106,6 +1107,7 @@ const lang = getSiteLocale() ?? "en";
 			}
 		</style>
 
+		<slot name="body-end" />
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
 </html>

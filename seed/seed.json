@@ -28,6 +28,21 @@
 					"label": "Content",
 					"type": "portableText",
 					"searchable": true
+				},
+				{
+					"slug": "custom_css",
+					"label": "CSS",
+					"type": "text"
+				},
+				{
+					"slug": "head_code",
+					"label": "JS（ヘッダー）",
+					"type": "text"
+				},
+				{
+					"slug": "footer_code",
+					"label": "JS（フッター）",
+					"type": "text"
 				}
 			]
 		}

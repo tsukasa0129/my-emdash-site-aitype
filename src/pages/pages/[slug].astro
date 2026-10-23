@@ -20,12 +20,26 @@ if (!page) {
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 // Pages have no title or SEO fields; the tab shows the site title.
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
+
+// Per-page code from the editor's "CSS・JS" panel. The JS fields take raw HTML
+// (script tags, tracking snippets); bare code gets wrapped in the right tag.
+function asHtml(value: unknown, tag: "style" | "script"): string {
+	const code = typeof value === "string" ? value.trim() : "";
+	if (!code) return "";
+	return code.startsWith("<") ? code : `<${tag}>${code}</${tag}>`;
+}
+const customCss = asHtml(page.data.custom_css, "style");
+const headCode = asHtml(page.data.head_code, "script");
+const footerCode = asHtml(page.data.footer_code, "script");
 ---
 
 <Base
 	title={siteTitle}
 	content={{ collection: "pages", id: page.data.id, slug }}
 >
+	{customCss && <Fragment slot="head" set:html={customCss} />}
+	{headCode && <Fragment slot="head" set:html={headCode} />}
+	{footerCode && <Fragment slot="body-end" set:html={footerCode} />}
 	<article class="band page">
 		<div class="frame">
 			<div class="prose page__body" {...page.edit.content}>
