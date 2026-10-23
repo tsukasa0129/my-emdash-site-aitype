@@ -58,6 +58,14 @@ const HIDDEN_PAGE_CODE_FIELDS = ["custom_css", "head_code", "footer_code"].map(
 // The dashboard is replaced by the pages list (see ADMIN_HOME below).
 const HIDDEN_DASHBOARD_LINK = `li:has(> a[href="/_emdash/admin/"])`;
 
+// Landing pages are read in a phone-width column: 480px frame (theme.css)
+// minus 2rem padding each side leaves 416px of text. Keep the page body
+// editor at that width so its line breaks match the published page, and let
+// its formatting toolbar wrap instead of clipping the last buttons.
+const PHONE_WIDTH_EDITOR_CSS =
+	`#field-content{max-width:416px;margin-inline:auto}` +
+	`#field-content [role="toolbar"],#field-content [role="toolbar"] div{flex-wrap:wrap;height:auto;overflow:visible}`;
+
 const HIDE_ADMIN_LINKS_CSS = `${[
 	...HIDDEN_ADMIN_PATHS.flatMap((path) => {
 		const link = `a[href="/_emdash/admin/${path}"]`;
@@ -183,7 +191,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	return new Response(
 		html.replace(
 			"</head>",
-			`<style>${HIDE_ADMIN_LINKS_CSS}</style><script>${REDIRECT_DASHBOARD_SCRIPT}</script></head>`,
+			`<style>${HIDE_ADMIN_LINKS_CSS}${PHONE_WIDTH_EDITOR_CSS}</style><script>${REDIRECT_DASHBOARD_SCRIPT}</script></head>`,
 		),
 		{ status: response.status, statusText: response.statusText, headers },
 	);

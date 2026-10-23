@@ -33,4 +33,6 @@
 :root {
 	/* Landing pages read like a phone screen at every viewport width */
 	--wide-width: 480px;
+	/* White page canvas (dark mode keeps the default near-black) */
+	--color-bg: light-dark(#ffffff, #0a0a0a);
 }
