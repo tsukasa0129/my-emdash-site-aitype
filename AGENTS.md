@@ -61,9 +61,11 @@ Started from the EmDash blog template and cut down to a pages-only site for arti
 
 ## Admin
 
-`src/middleware.ts` hides the built-in admin areas this site doesn't use (Calendar, Media, Comments, Menus, Widgets, ...) by injecting CSS into admin pages, leaving Pages, Content Types, Users and Settings. It also hides the Ownership and Bylines panels in the entry editor, and redirects the dashboard (`/_emdash/admin/`) to the pages list, on the server and for in-app navigation. It only hides UI.
+`src/middleware.ts` hides the built-in admin areas this site doesn't use (Calendar, Media, Comments, Menus, Widgets, ...) by injecting CSS into admin pages, leaving only Pages and Settings. It also hides the Ownership and Bylines panels and the "Content language" row in the entry editor, and redirects the dashboard (`/_emdash/admin/`) to the pages list, on the server and for in-app navigation. It only hides UI.
 
-The same middleware trims the site's MCP server (`/_emdash/api/mcp`): tools for bylines, taxonomies, menus, block types and site import/export are removed from `tools/list` and calls to them are refused (`HIDDEN_MCP_TOOL`). EmDash itself only offers `mcp: false` to turn the whole server off. Replace it with `admin.hiddenNavItems` in `astro.config.mjs` once an EmDash release supports that option (1.3.1 does not).
+The same middleware trims the site's MCP server (`/_emdash/api/mcp`): tools for bylines, taxonomies, menus, block types and site import/export are removed from `tools/list` and calls to them are refused (`HIDDEN_MCP_TOOL`). EmDash itself only offers `mcp: false` to turn the whole server off.
+
+Replace the sidebar CSS with `admin.hiddenNavItems` in `astro.config.mjs` once an EmDash release supports that option (1.3.1 does not).
 
 ## Visual character
 

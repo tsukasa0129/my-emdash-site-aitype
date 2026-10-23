@@ -24,6 +24,8 @@ const HIDDEN_ADMIN_PATHS = [
 	"byline-schema",
 	"plugins-manager",
 	"import/wordpress",
+	"content-types",
+	"users",
 ];
 
 // Every link in the sidebar's "Manage" group is hidden, so drop the whole
@@ -40,6 +42,12 @@ const HIDDEN_EDITOR_PANELS = [
 	"執筆者をドラッグして並べ替え",
 ].map((label) => `section:has(> button[data-sortable-handle][aria-label="${label}"])`);
 
+// The "Content language" row in the URL & language panel (the site has one
+// language). It's the row holding the "why English is used" help button.
+const HIDDEN_CONTENT_LANGUAGE = ["Why English is used", "英語が使用される理由"].map(
+	(label) => `div:has(> div > button[aria-label="${label}"])`,
+);
+
 // The dashboard is replaced by the pages list (see ADMIN_HOME below).
 const HIDDEN_DASHBOARD_LINK = `li:has(> a[href="/_emdash/admin/"])`;
 
@@ -50,6 +58,7 @@ const HIDE_ADMIN_LINKS_CSS = `${[
 	}),
 	HIDDEN_SIDEBAR_GROUP,
 	...HIDDEN_EDITOR_PANELS,
+	...HIDDEN_CONTENT_LANGUAGE,
 	HIDDEN_DASHBOARD_LINK,
 ].join(",")}{display:none!important}`;
 
