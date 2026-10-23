@@ -55,9 +55,13 @@ Started from the EmDash blog template and cut down to a pages-only site for arti
 
 ## Schema
 
-- `pages` collection: `content` (Portable Text) only, with SEO support turned off. There is no title field: the browser tab shows the site title and the admin list shows the slug.
+- `pages` collection: `content` (Portable Text), plus `custom_css`, `head_code` and `footer_code` (text) for per-page code, with SEO support turned off. There is no title field: the browser tab shows the site title and the admin list shows the slug.
 - Every page is `noindex, nofollow` (the default `robots` in `Base.astro`): these are ad landing pages.
 - No other collections, taxonomies, menus, or widget areas.
+
+## Per-page CSS / JS
+
+`src/plugins/page-code.ts` is a local plugin (registered in `astro.config.mjs`, standard format, runs in-process) that adds a "CSS・JS" panel to the page editor's sidebar. "編集" loads the page's current (unsaved) code; "反映" proposes it as an editor-draft patch, so it is saved and published with the page like any other field. `pages/[slug].astro` renders `custom_css` in `<head>`, `head_code` in `<head>` and `footer_code` before `</body>` through named slots in `Base.astro`. The JS fields take raw HTML; bare code is wrapped in `<script>` (or `<style>` for CSS). The middleware hides the duplicate inputs in the editor's main column.
 
 ## Admin
 

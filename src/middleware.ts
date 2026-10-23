@@ -48,6 +48,13 @@ const HIDDEN_CONTENT_LANGUAGE = ["Why English is used", "英語が使用され�
 	(label) => `div:has(> div > button[aria-label="${label}"])`,
 );
 
+// The page code fields are edited from the "CSS・JS" sidebar panel
+// (src/plugins/page-code.ts), so drop their duplicate inputs from the main
+// column. They stay in the form, so the panel's draft patches still save.
+const HIDDEN_PAGE_CODE_FIELDS = ["custom_css", "head_code", "footer_code"].map(
+	(slug) => `div:has(> textarea#field-${slug})`,
+);
+
 // The dashboard is replaced by the pages list (see ADMIN_HOME below).
 const HIDDEN_DASHBOARD_LINK = `li:has(> a[href="/_emdash/admin/"])`;
 
@@ -59,6 +66,7 @@ const HIDE_ADMIN_LINKS_CSS = `${[
 	HIDDEN_SIDEBAR_GROUP,
 	...HIDDEN_EDITOR_PANELS,
 	...HIDDEN_CONTENT_LANGUAGE,
+	...HIDDEN_PAGE_CODE_FIELDS,
 	HIDDEN_DASHBOARD_LINK,
 ].join(",")}{display:none!important}`;
 

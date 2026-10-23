@@ -10,6 +10,9 @@ export interface Page {
   slug: string | null;
   status: string;
   content?: PortableTextBlock[];
+  custom_css?: string;
+  head_code?: string;
+  footer_code?: string;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
