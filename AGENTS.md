@@ -48,14 +48,14 @@ Started from the EmDash blog template and cut down to a pages-only site for arti
 
 ## Pages
 
-| Page | Path            | What it shows                                                                                                         |
-| ---- | --------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Page | `/pages/[slug]` | A page's Portable Text content. With `layout: lp`: no site header/footer, no visible title, phone-width (480px) column |
-| 404  | everything else | Minimal "page not found", including `/`                                                                               |
+| Page | Path            | What it shows                                                                                 |
+| ---- | --------------- | --------------------------------------------------------------------------------------------- |
+| Page | `/pages/[slug]` | Only the page's Portable Text content, in a phone-width (480px) column. No site header/footer |
+| 404  | everything else | Minimal "page not found", including `/`                                                       |
 
 ## Schema
 
-- `pages` collection: `layout` (select: `default` / `lp`), `title`, `content` (Portable Text).
+- `pages` collection: `content` (Portable Text) only. There is no title field: the browser tab title comes from the page's SEO title, falling back to the site title, and the admin list shows the slug.
 - No other collections, taxonomies, menus, or widget areas.
 
 ## Admin

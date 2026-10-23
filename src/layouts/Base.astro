@@ -25,8 +25,6 @@ interface Props {
 	author?: string | null;
 	/** Pass content reference for plugin page contributions on content pages */
 	content?: { collection: string; id: string; slug?: string | null };
-	/** Omit the site header and footer, e.g. for an ad landing page */
-	bare?: boolean;
 }
 
 const {
@@ -41,12 +39,11 @@ const {
 	modifiedTime,
 	author,
 	content,
-	bare = false,
 } = Astro.props;
 const settingsResult = await getSiteSettingsWithCacheHint();
 if (Astro.cache?.enabled) Astro.cache.set(settingsResult.cacheHint);
 
-const { siteTitle, siteTagline, siteLogo } = resolveBlogSiteIdentity(
+const { siteTitle } = resolveBlogSiteIdentity(
 	settingsResult.data,
 );
 const titleIncludesSiteName =
@@ -72,12 +69,7 @@ const pageCtx = createPublicPageContext({
 	siteName: siteTitle,
 });
 
-// Check if user is logged in (for showing admin link)
-const isLoggedIn = !!Astro.locals.user;
-
 const lang = getSiteLocale() ?? "en";
-const monogram = [...siteTitle.trim()][0]?.toUpperCase() ?? "";
-const year = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -89,235 +81,13 @@ const year = new Date().getFullYear();
 		<Font cssVariable="--font-mono" />
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
-		<script is:inline>
-			// Apply an explicit theme choice immediately to prevent flash.
-			// With no cookie, color-scheme: light dark follows the OS.
-			(function () {
-				var row = document.cookie.split("; ").find(function (item) {
-					return item.startsWith("theme=");
-				});
-				var theme = row ? row.slice(6) : null;
-				if (theme === "dark" || theme === "light") {
-					document.documentElement.classList.add(theme);
-				}
-			})();
-		</script>
 	</head>
 	<body>
 		<EmDashBodyStart page={pageCtx} />
 		<a href="#main" class="skip-link">Skip to content</a>
-		{
-			!bare && (
-				<>
-		<header class="site-header">
-			<div class="frame site-header__inner">
-				<div class="brand">
-					{
-						siteLogo ? (
-							<img
-								src={siteLogo.url}
-								alt={siteLogo.alt || siteTitle}
-								class="brand__logo"
-							/>
-						) : (
-							<>
-								{monogram && (
-									<span class="brand__mark" aria-hidden="true">
-										{monogram}
-									</span>
-								)}
-								<span class="brand__name">{siteTitle}</span>
-							</>
-						)
-					}
-				</div>
-				<div class="site-header__actions">
-					{
-						isLoggedIn && (
-							<a href="/_emdash/admin" class="btn btn--ghost btn--sm nav-admin">
-								Admin
-							</a>
-						)
-					}
-				</div>
-			</div>
-		</header>
-		<script is:inline>
-			// Inline, so the height is set before the browser scrolls to a URL fragment
-			(function () {
-				var header = document.querySelector(".site-header");
-				function setHeight() {
-					document.documentElement.style.setProperty(
-						"--header-height",
-						header.offsetHeight + "px",
-					);
-				}
-				setHeight();
-				new ResizeObserver(setHeight).observe(header);
-			})();
-		</script>
-				</>
-			)
-		}
-
 		<main id="main" tabindex="-1">
 			<slot />
 		</main>
-
-		{
-			!bare && (
-		<footer class="site-footer band">
-			<div class="frame site-footer__grid">
-				<div class="site-footer__brand">
-					<div class="brand">
-						{
-							siteLogo ? (
-								<img
-									src={siteLogo.url}
-									alt={siteLogo.alt || siteTitle}
-									class="brand__logo"
-								/>
-							) : (
-								<>
-									{monogram && (
-										<span class="brand__mark" aria-hidden="true">
-											{monogram}
-										</span>
-									)}
-									<span class="brand__name">{siteTitle}</span>
-								</>
-							)
-						}
-					</div>
-					{siteTagline && <p class="site-footer__tagline">{siteTagline}</p>}
-				</div>
-			</div>
-			<div class="band site-footer__bottom">
-				<div class="frame site-footer__bottom-inner">
-					<p class="site-footer__meta">
-						{`© ${year} ${siteTitle}.`} Powered by{" "}
-						<a href="https://emdashcms.com">EmDash</a>
-					</p>
-					<div class="theme-switcher" role="group" aria-label="Color theme">
-						<button
-							type="button"
-							class="theme-btn"
-							data-theme="light"
-							aria-label="Light"
-						>
-							<svg
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="1.75"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								aria-hidden="true"
-								><circle cx="12" cy="12" r="4"></circle><path
-									d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
-								></path></svg
-							>
-						</button>
-						<button
-							type="button"
-							class="theme-btn"
-							data-theme="dark"
-							aria-label="Dark"
-						>
-							<svg
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="1.75"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								aria-hidden="true"
-								><path
-									d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
-								></path></svg
-							>
-						</button>
-						<button
-							type="button"
-							class="theme-btn"
-							data-theme="system"
-							aria-label="System"
-						>
-							<svg
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="1.75"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								aria-hidden="true"
-								><rect x="2" y="3" width="20" height="14" rx="2"></rect><path
-									d="M8 21h8M12 17v4"></path></svg
-							>
-						</button>
-					</div>
-				</div>
-			</div>
-		</footer>
-			)
-		}
-
-		<script>
-			// Theme switcher
-			const themeBtns =
-				document.querySelectorAll<HTMLButtonElement>(".theme-btn");
-			const root = document.documentElement;
-
-			function setCookie(
-				name: string,
-				value: string,
-				maxAge: number = 31536000,
-			) {
-				const secure = location.protocol === "https:" ? "; Secure" : "";
-				if (value === "") {
-					document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax${secure}`;
-				} else {
-					document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax${secure}`;
-				}
-			}
-
-			function setTheme(theme: string) {
-				if (theme === "system") {
-					setCookie("theme", "");
-					root.classList.remove("light", "dark");
-				} else {
-					setCookie("theme", theme);
-					root.classList.remove("light", "dark");
-					root.classList.add(theme);
-				}
-				updateActiveBtn(theme);
-			}
-
-			function updateActiveBtn(theme: string) {
-				themeBtns.forEach((btn) => {
-					const active = btn.dataset.theme === theme;
-					btn.classList.toggle("active", active);
-					btn.setAttribute("aria-pressed", String(active));
-				});
-			}
-
-			function getStoredTheme(): string {
-				const row = document.cookie
-					.split("; ")
-					.find((item) => item.startsWith("theme="));
-				return row?.slice(6) || "system";
-			}
-
-			// Initialize
-			const storedTheme = getStoredTheme();
-			setTheme(storedTheme);
-
-			themeBtns.forEach((btn) => {
-				btn.addEventListener("click", () => {
-					setTheme(btn.dataset.theme || "system");
-				});
-			});
-		</script>
 
 		<style is:global>
 			/*
