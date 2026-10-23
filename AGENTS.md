@@ -56,6 +56,7 @@ Started from the EmDash blog template and cut down to a pages-only site for arti
 ## Schema
 
 - `pages` collection: `content` (Portable Text), plus `custom_css`, `head_code` and `footer_code` (text) for per-page code, with SEO support turned off. There is no title field: the browser tab shows the site title and the admin list shows the slug.
+- The page canvas is white (`--color-bg` in `theme.css`; dark mode keeps the default near-black).
 - Every page is `noindex, nofollow` (the default `robots` in `Base.astro`): these are ad landing pages.
 - No other collections, taxonomies, menus, or widget areas.
 
@@ -65,7 +66,7 @@ Started from the EmDash blog template and cut down to a pages-only site for arti
 
 ## Admin
 
-`src/middleware.ts` hides the built-in admin areas this site doesn't use (Calendar, Media, Comments, Menus, Widgets, ...) by injecting CSS into admin pages, leaving only Pages and Settings. It also hides the Ownership and Bylines panels and the "Content language" row in the entry editor, and redirects the dashboard (`/_emdash/admin/`) to the pages list, on the server and for in-app navigation. It only hides UI.
+`src/middleware.ts` hides the built-in admin areas this site doesn't use (Calendar, Media, Comments, Menus, Widgets, ...) by injecting CSS into admin pages, leaving only Pages and Settings. It also hides the Ownership and Bylines panels and the "Content language" row in the entry editor, and redirects the dashboard (`/_emdash/admin/`) to the pages list, on the server and for in-app navigation. It only hides UI. It also narrows the page body editor to 416px (the published text column) and lets its toolbar wrap.
 
 The same middleware trims the site's MCP server (`/_emdash/api/mcp`): tools for bylines, taxonomies, menus, block types and site import/export are removed from `tools/list` and calls to them are refused (`HIDDEN_MCP_TOOL`). EmDash itself only offers `mcp: false` to turn the whole server off.
 
