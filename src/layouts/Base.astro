@@ -27,6 +27,8 @@ interface Props {
 	author?: string | null;
 	/** Pass content reference for plugin page contributions on content pages */
 	content?: { collection: string; id: string; slug?: string | null };
+	/** Omit the site header and footer, e.g. for an ad landing page */
+	bare?: boolean;
 }
 
 const {
@@ -41,6 +43,7 @@ const {
 	modifiedTime,
 	author,
 	content,
+	bare = false,
 } = Astro.props;
 const [settingsResult, menuResult] = await Promise.all([
 	getSiteSettingsWithCacheHint(),
@@ -139,6 +142,9 @@ const year = new Date().getFullYear();
 	<body>
 		<EmDashBodyStart page={pageCtx} />
 		<a href="#main" class="skip-link">Skip to content</a>
+		{
+			!bare && (
+				<>
 		<header class="site-header">
 			<div class="frame site-header__inner">
 				<a href="/" class="brand">
@@ -252,11 +258,16 @@ const year = new Date().getFullYear();
 				new ResizeObserver(setHeight).observe(header);
 			})();
 		</script>
+				</>
+			)
+		}
 
 		<main id="main" tabindex="-1">
 			<slot />
 		</main>
 
+		{
+			!bare && (
 		<footer class="site-footer band">
 			<div class="frame site-footer__grid">
 				<div class="site-footer__brand">
@@ -403,6 +414,8 @@ const year = new Date().getFullYear();
 				</div>
 			</div>
 		</footer>
+			)
+		}
 
 		<script>
 			// Theme switcher

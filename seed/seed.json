@@ -63,6 +63,13 @@
 					"label": "Content",
 					"type": "portableText",
 					"searchable": true
+				},
+				{
+					"slug": "layout",
+					"label": "Layout",
+					"type": "select",
+					"defaultValue": "default",
+					"validation": { "options": ["default", "lp"] }
 				}
 			]
 		}
