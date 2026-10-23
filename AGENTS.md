@@ -55,12 +55,13 @@ Started from the EmDash blog template and cut down to a pages-only site for arti
 
 ## Schema
 
-- `pages` collection: `content` (Portable Text) only. There is no title field: the browser tab title comes from the page's SEO title, falling back to the site title, and the admin list shows the slug.
+- `pages` collection: `content` (Portable Text) only, with SEO support turned off. There is no title field: the browser tab shows the site title and the admin list shows the slug.
+- Every page is `noindex, nofollow` (the default `robots` in `Base.astro`): these are ad landing pages.
 - No other collections, taxonomies, menus, or widget areas.
 
 ## Admin
 
-`src/middleware.ts` hides the built-in admin areas this site doesn't use (Calendar, Media, Comments, Menus, Widgets, ...) by injecting CSS into admin pages, leaving Dashboard, Pages, Content Types, Users and Settings. It only hides links. Replace it with `admin.hiddenNavItems` in `astro.config.mjs` once an EmDash release supports that option (1.3.1 does not).
+`src/middleware.ts` hides the built-in admin areas this site doesn't use (Calendar, Media, Comments, Menus, Widgets, ...) by injecting CSS into admin pages, leaving Pages, Content Types, Users and Settings. It also hides the Ownership and Bylines panels in the entry editor, and redirects the dashboard (`/_emdash/admin/`) to the pages list, on the server and for in-app navigation. It only hides UI. Replace it with `admin.hiddenNavItems` in `astro.config.mjs` once an EmDash release supports that option (1.3.1 does not).
 
 ## Visual character
 
